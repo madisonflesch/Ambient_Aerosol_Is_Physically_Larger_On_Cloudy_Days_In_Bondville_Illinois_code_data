@@ -1,0 +1,650 @@
+Overview
+
+Overview                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+IMPROVE Data Use: For journal publications, please inform Loretta Wilson (loretta.wilson@colostate.edu) of the planned publication. Drafts of publications will be reviewed upon request for issues that could affect the data interpretation. Preferred Reference: Please reference the Malm,et al. (1994) article below when using IMPROVE data. Malm, W. C., J. F. Sisler, D. Huffman, R. A. Eldred, and T. A. Cahill (1994), Spatial and seasonal trends in particle concentration and optical extinction in the United States, J. Geophys. Res., 99, 1347-1370. Preferred Acknowledgment: IMPROVE is a collaborative association of state, tribal, and federal agencies, and international partners. US Environmental Protection Agency is the primary funding source, with contracting and research support from the National Park Service. The Air Quality Group at the University of California, Davis is the central analytical laboratory, with ion analysis provided by Research Triangle Institute, and carbon analysis provided by Desert Research Institute.
+(Also: Prior to use, all data users are encouraged to review the IMPROVE data advisories located on the IMPROVE website: http://vista.cira.colostate.edu/IMPROVE/Data/QA_QC/Advisory.htm)  
+
+Datasets
+
+Dataset          Code    StartDate             EndDate                Frequency   NumRecords  
+IMPROVE Aerosol  IMPAER  3/2/1988 12:00:00 AM  7/30/2020 12:00:00 AM  1-in-3 day  32672654    
+
+Sites
+
+Site       Code   Dataset  Country  State  County  AQSCode    Latitude  Longitude  Elevation  StartDate   EndDate     DemographicCode  LandUseCode  StreetAddress  LocDesc  Sponsor  ProgramKey  NumPOCs  
+Bondville  BOND1  IMPAER   US       IL     17019   170191001  40.05200  -88.37330  263        03/08/2001  07/29/2020  -999             Unknown      -999           -999     EPA      IMPROVE     1        
+
+Parameters
+
+ParamID  ParamCode  ParamName      AQSCode  Units    Description                                    
+134      NAf        Sodium (Fine)  88184    µg/m^3   Mass of sodium particles < 2.5 um in diameter  
+
+Site History
+
+History  Dataset  EntryType                  EntryDate   Description                                                                      
+BOND1    IMPAER   Problem                    10/08/2013  Pump A not starting (resolved)                                                   
+BOND1    IMPAER   Problem                    10/14/2013  B ORI low, at zero values (resolved)                                             
+BOND1    IMPAER   Part Replacement           10/15/2013  Pump (1A)                                                                        
+BOND1    IMPAER   Equipment Problem          11/21/2013  Shift in D ORI (resolved)                                                        
+BOND1    IMPAER   Equipment Problem          11/25/2013  D values running at 10.7-10.8, when last Calibration was set to 11.4 (resolved)  
+BOND1    IMPAER   Part Replacement           12/02/2013  Module Cable                                                                     
+BOND1    IMPAER   Sampler Flow Check         12/20/2013  Modules: 4D                                                                      
+BOND1    IMPAER   Equipment Problem          01/15/2014  Potential Water/Ice Inside the D Mod Manifold (resolved)                         
+BOND1    IMPAER   Equipment Problem          01/15/2014  C pump reading 16 Mx ORI and due for 2yr replacement (resolved)                  
+BOND1    IMPAER   Equipment Problem          01/15/2014  B Pump reading 32 Mx ORI and due for 2yr Replacement (resolved)                  
+BOND1    IMPAER   Part Replacement           01/15/2014  EBox (3C)                                                                        
+BOND1    IMPAER   Part Replacement           01/15/2014  EBox (2B)                                                                        
+BOND1    IMPAER   Part Replacement           01/15/2014  EBox (1A)                                                                        
+BOND1    IMPAER   Part Replacement           01/15/2014  Controller                                                                       
+BOND1    IMPAER   Part Replacement           01/16/2014  Pump (3C)                                                                        
+BOND1    IMPAER   Part Replacement           01/16/2014  Pump (2B)                                                                        
+BOND1    IMPAER   Sampler Flow Check         01/19/2014  Modules: 4D                                                                      
+BOND1    IMPAER   Part Replacement           01/19/2014  Module                                                                           
+BOND1    IMPAER   Part Replacement           02/04/2014  Pump (3C)                                                                        
+BOND1    IMPAER   Equipment Problem          02/10/2014  C Pump sounds bad. (resolved)                                                    
+BOND1    IMPAER   Equipment Problem          02/19/2014  D CYC near 0, ORI is good. (resolved)                                            
+BOND1    IMPAER   Structural Damage Problem  02/20/2014  Possible Anodizing Dust (resolved)                                               
+BOND1    IMPAER   Equipment Problem          03/31/2014  OPRTR changed time (resolved)                                                    
+BOND1    IMPAER   Site Visit                 06/24/2014  Calibration and maintenance on all modules                                       
+
+Dataset History
+
+History  EntryType      EntryDate   Description                                                                                                                                                  
+IMPAER   Analysis Note  01/01/2011  Analysis of all elements shifted from legacy XRF systems to commercial PANalytical Epsilon5 instruments using multiple secondary targets.                    
+IMPAER   Sampling Note  01/01/2013  Changed from double quartz field blanks to single quartz field blanks at all sites which have field blanks.                                                  
+IMPAER   Sampling Note  01/01/2013  Introduced new sample holders (cassettes) into network with new support screen design.  Screens were distributed throughout network over a two week period.  
+
+Status Flags
+
+Status Flag  Description                                                                         
+H1           Historical data that have not been assessed or validated.                           
+I0           Invalid value - unknown reason                                                      
+I1           Invalid value - known reason                                                        
+I2           Invalid value (-999), though sample-level flag seems valid (SEM)                    
+M1           Missing value because no value is available                                         
+M2           Missing value because invalidated by data originator                                
+M3           Missing value due to clogged filter                                                 
+NA           Not available from source data                                                      
+V0           Valid value                                                                         
+V1           Valid value but comprised wholly or partially of below detection limit data         
+V2           Valid estimated value                                                               
+V3           Valid interpolated value                                                            
+V4           Valid value despite failing to meet some QC or statistical criteria                 
+V5           Valid value but qualified because of possible contamination                         
+V6           Valid value but qualified due to non-standard sampling conditions                   
+V7           Valid value set equal to the detection limit (DL) since the value was below the DL  
+VE           Valid value during air quality event                                                
+VM           Valid modeled value                                                                 
+VS           Valid substituted value                                                             
+
+Data
+
+Dataset  SiteCode  POC  Date        NAf:Val   
+IMPAER   BOND1     1    01/02/2010  0.08383   
+IMPAER   BOND1     1    01/05/2010  0.1296    
+IMPAER   BOND1     1    01/08/2010  0         
+IMPAER   BOND1     1    01/11/2010  0.16523   
+IMPAER   BOND1     1    01/14/2010  0.15801   
+IMPAER   BOND1     1    01/17/2010  0         
+IMPAER   BOND1     1    01/20/2010  0.10213   
+IMPAER   BOND1     1    01/23/2010  0.20856   
+IMPAER   BOND1     1    01/26/2010  0.23245   
+IMPAER   BOND1     1    01/29/2010  0.09866   
+IMPAER   BOND1     1    02/01/2010  0.09961   
+IMPAER   BOND1     1    02/04/2010  0.03947   
+IMPAER   BOND1     1    02/07/2010  0.1574    
+IMPAER   BOND1     1    02/10/2010  0         
+IMPAER   BOND1     1    02/13/2010  0         
+IMPAER   BOND1     1    02/16/2010  0.12385   
+IMPAER   BOND1     1    02/19/2010  0.04602   
+IMPAER   BOND1     1    02/22/2010  0.12051   
+IMPAER   BOND1     1    02/25/2010  0.07946   
+IMPAER   BOND1     1    02/28/2010  0.11306   
+IMPAER   BOND1     1    03/03/2010  0.1042    
+IMPAER   BOND1     1    03/06/2010  0.05349   
+IMPAER   BOND1     1    03/09/2010  0         
+IMPAER   BOND1     1    03/12/2010  0         
+IMPAER   BOND1     1    03/15/2010  0         
+IMPAER   BOND1     1    03/18/2010  0.07668   
+IMPAER   BOND1     1    03/21/2010  0         
+IMPAER   BOND1     1    03/24/2010  0.2551    
+IMPAER   BOND1     1    03/27/2010  0.14549   
+IMPAER   BOND1     1    03/30/2010  0.04812   
+IMPAER   BOND1     1    04/02/2010  0         
+IMPAER   BOND1     1    04/05/2010  0.29643   
+IMPAER   BOND1     1    04/08/2010  0         
+IMPAER   BOND1     1    04/11/2010  0.20014   
+IMPAER   BOND1     1    04/14/2010  0         
+IMPAER   BOND1     1    04/17/2010  0         
+IMPAER   BOND1     1    04/20/2010  0         
+IMPAER   BOND1     1    04/23/2010  0         
+IMPAER   BOND1     1    04/26/2010  0         
+IMPAER   BOND1     1    04/29/2010  0.15909   
+IMPAER   BOND1     1    05/02/2010  0         
+IMPAER   BOND1     1    05/05/2010  0         
+IMPAER   BOND1     1    05/08/2010  0         
+IMPAER   BOND1     1    05/11/2010  0.06262   
+IMPAER   BOND1     1    05/14/2010  0.03449   
+IMPAER   BOND1     1    05/17/2010  0         
+IMPAER   BOND1     1    05/20/2010  0         
+IMPAER   BOND1     1    05/23/2010  0.23343   
+IMPAER   BOND1     1    05/26/2010  0         
+IMPAER   BOND1     1    05/29/2010  0.1254    
+IMPAER   BOND1     1    06/01/2010  0         
+IMPAER   BOND1     1    06/04/2010  0         
+IMPAER   BOND1     1    06/07/2010  0         
+IMPAER   BOND1     1    06/10/2010  0         
+IMPAER   BOND1     1    06/13/2010  0.08303   
+IMPAER   BOND1     1    06/16/2010  0.03202   
+IMPAER   BOND1     1    06/19/2010  0.07682   
+IMPAER   BOND1     1    06/22/2010  0         
+IMPAER   BOND1     1    06/25/2010  0.16299   
+IMPAER   BOND1     1    06/28/2010  0         
+IMPAER   BOND1     1    07/01/2010  0         
+IMPAER   BOND1     1    07/04/2010  0.21361   
+IMPAER   BOND1     1    07/07/2010  0.12493   
+IMPAER   BOND1     1    07/10/2010  0.08814   
+IMPAER   BOND1     1    07/13/2010  0.2113    
+IMPAER   BOND1     1    07/16/2010  0.02952   
+IMPAER   BOND1     1    07/19/2010  0         
+IMPAER   BOND1     1    07/22/2010  0.18399   
+IMPAER   BOND1     1    07/25/2010  0         
+IMPAER   BOND1     1    07/28/2010  0         
+IMPAER   BOND1     1    07/31/2010  0         
+IMPAER   BOND1     1    08/03/2010  -999      
+IMPAER   BOND1     1    08/06/2010  -999      
+IMPAER   BOND1     1    08/09/2010  -999      
+IMPAER   BOND1     1    08/12/2010  0         
+IMPAER   BOND1     1    08/15/2010  0         
+IMPAER   BOND1     1    08/18/2010  0         
+IMPAER   BOND1     1    08/21/2010  0         
+IMPAER   BOND1     1    08/24/2010  0         
+IMPAER   BOND1     1    08/27/2010  0         
+IMPAER   BOND1     1    08/30/2010  0         
+IMPAER   BOND1     1    09/02/2010  0         
+IMPAER   BOND1     1    09/05/2010  0.04108   
+IMPAER   BOND1     1    09/08/2010  0         
+IMPAER   BOND1     1    09/11/2010  0.14578   
+IMPAER   BOND1     1    09/14/2010  0.02592   
+IMPAER   BOND1     1    09/17/2010  0         
+IMPAER   BOND1     1    09/20/2010  0.09953   
+IMPAER   BOND1     1    09/23/2010  0.28882   
+IMPAER   BOND1     1    09/26/2010  0.04845   
+IMPAER   BOND1     1    09/29/2010  0.25388   
+IMPAER   BOND1     1    10/02/2010  0.02176   
+IMPAER   BOND1     1    10/05/2010  0         
+IMPAER   BOND1     1    10/08/2010  0         
+IMPAER   BOND1     1    10/11/2010  0         
+IMPAER   BOND1     1    10/14/2010  0         
+IMPAER   BOND1     1    10/17/2010  0         
+IMPAER   BOND1     1    10/20/2010  0.09118   
+IMPAER   BOND1     1    10/23/2010  0         
+IMPAER   BOND1     1    10/26/2010  0         
+IMPAER   BOND1     1    10/29/2010  0.07665   
+IMPAER   BOND1     1    11/01/2010  0.01851   
+IMPAER   BOND1     1    11/04/2010  0         
+IMPAER   BOND1     1    11/07/2010  0.1378    
+IMPAER   BOND1     1    11/10/2010  0.29577   
+IMPAER   BOND1     1    11/13/2010  0.04449   
+IMPAER   BOND1     1    11/16/2010  0.17647   
+IMPAER   BOND1     1    11/19/2010  0         
+IMPAER   BOND1     1    11/22/2010  0.21922   
+IMPAER   BOND1     1    11/25/2010  0.05158   
+IMPAER   BOND1     1    11/28/2010  0.08364   
+IMPAER   BOND1     1    12/01/2010  0.13966   
+IMPAER   BOND1     1    12/04/2010  0.14884   
+IMPAER   BOND1     1    12/07/2010  0         
+IMPAER   BOND1     1    12/10/2010  0.26592   
+IMPAER   BOND1     1    12/13/2010  0.06147   
+IMPAER   BOND1     1    12/16/2010  0.23499   
+IMPAER   BOND1     1    12/19/2010  0         
+IMPAER   BOND1     1    12/22/2010  0         
+IMPAER   BOND1     1    12/25/2010  0.07804   
+IMPAER   BOND1     1    12/28/2010  0.21726   
+IMPAER   BOND1     1    12/31/2010  0.15749   
+IMPAER   BOND1     1    01/03/2011  0.00125   
+IMPAER   BOND1     1    01/06/2011  0.01008   
+IMPAER   BOND1     1    01/09/2011  0.08235   
+IMPAER   BOND1     1    01/12/2011  0.04651   
+IMPAER   BOND1     1    01/15/2011  0.01496   
+IMPAER   BOND1     1    01/18/2011  0.0075    
+IMPAER   BOND1     1    01/21/2011  0.12585   
+IMPAER   BOND1     1    01/24/2011  0.07899   
+IMPAER   BOND1     1    01/27/2011  0.01039   
+IMPAER   BOND1     1    01/30/2011  0.00157   
+IMPAER   BOND1     1    02/02/2011  0.02998   
+IMPAER   BOND1     1    02/05/2011  0.03488   
+IMPAER   BOND1     1    02/08/2011  0.01618   
+IMPAER   BOND1     1    02/11/2011  0.03375   
+IMPAER   BOND1     1    02/14/2011  0.0148    
+IMPAER   BOND1     1    02/17/2011  0.04322   
+IMPAER   BOND1     1    02/20/2011  0.01167   
+IMPAER   BOND1     1    02/23/2011  0.04061   
+IMPAER   BOND1     1    02/26/2011  0.01651   
+IMPAER   BOND1     1    03/01/2011  0         
+IMPAER   BOND1     1    03/04/2011  0.1202    
+IMPAER   BOND1     1    03/07/2011  0.0333    
+IMPAER   BOND1     1    03/10/2011  0.01127   
+IMPAER   BOND1     1    03/13/2011  0.05519   
+IMPAER   BOND1     1    03/16/2011  0         
+IMPAER   BOND1     1    03/19/2011  0.00209   
+IMPAER   BOND1     1    03/22/2011  0.0591    
+IMPAER   BOND1     1    03/25/2011  0.04579   
+IMPAER   BOND1     1    03/28/2011  0.03759   
+IMPAER   BOND1     1    03/31/2011  0.04697   
+IMPAER   BOND1     1    04/03/2011  0.05665   
+IMPAER   BOND1     1    04/06/2011  0         
+IMPAER   BOND1     1    04/09/2011  0.03998   
+IMPAER   BOND1     1    04/12/2011  0.01301   
+IMPAER   BOND1     1    04/15/2011  0.01732   
+IMPAER   BOND1     1    04/18/2011  0.00623   
+IMPAER   BOND1     1    04/21/2011  0         
+IMPAER   BOND1     1    04/24/2011  0         
+IMPAER   BOND1     1    04/27/2011  0.00637   
+IMPAER   BOND1     1    04/30/2011  0.00863   
+IMPAER   BOND1     1    05/03/2011  0         
+IMPAER   BOND1     1    05/06/2011  0         
+IMPAER   BOND1     1    05/09/2011  0.05818   
+IMPAER   BOND1     1    05/12/2011  0.09966   
+IMPAER   BOND1     1    05/15/2011  0.00586   
+IMPAER   BOND1     1    05/18/2011  0         
+IMPAER   BOND1     1    05/21/2011  0.03393   
+IMPAER   BOND1     1    05/24/2011  0.04254   
+IMPAER   BOND1     1    05/27/2011  0         
+IMPAER   BOND1     1    05/30/2011  0.09473   
+IMPAER   BOND1     1    06/02/2011  0         
+IMPAER   BOND1     1    06/05/2011  0.02182   
+IMPAER   BOND1     1    06/08/2011  0.04409   
+IMPAER   BOND1     1    06/11/2011  0.0035    
+IMPAER   BOND1     1    06/14/2011  0         
+IMPAER   BOND1     1    06/17/2011  0         
+IMPAER   BOND1     1    06/20/2011  0.07086   
+IMPAER   BOND1     1    06/23/2011  0         
+IMPAER   BOND1     1    06/26/2011  0.00522   
+IMPAER   BOND1     1    06/29/2011  0.00261   
+IMPAER   BOND1     1    07/02/2011  0.02103   
+IMPAER   BOND1     1    07/05/2011  0.01186   
+IMPAER   BOND1     1    07/08/2011  0.0053    
+IMPAER   BOND1     1    07/11/2011  0         
+IMPAER   BOND1     1    07/14/2011  0.00751   
+IMPAER   BOND1     1    07/17/2011  0.0701    
+IMPAER   BOND1     1    07/20/2011  0.06349   
+IMPAER   BOND1     1    07/23/2011  0.06034   
+IMPAER   BOND1     1    07/26/2011  0.03754   
+IMPAER   BOND1     1    07/29/2011  0.00159   
+IMPAER   BOND1     1    08/01/2011  0.07209   
+IMPAER   BOND1     1    08/04/2011  0.00387   
+IMPAER   BOND1     1    08/07/2011  0.01218   
+IMPAER   BOND1     1    08/10/2011  0.00877   
+IMPAER   BOND1     1    08/13/2011  0.04001   
+IMPAER   BOND1     1    08/16/2011  0.01122   
+IMPAER   BOND1     1    08/19/2011  0.01006   
+IMPAER   BOND1     1    08/22/2011  0         
+IMPAER   BOND1     1    08/25/2011  0.00234   
+IMPAER   BOND1     1    08/28/2011  0.00709   
+IMPAER   BOND1     1    08/31/2011  0.03848   
+IMPAER   BOND1     1    09/03/2011  0.03808   
+IMPAER   BOND1     1    09/06/2011  0.0018    
+IMPAER   BOND1     1    09/09/2011  0         
+IMPAER   BOND1     1    09/12/2011  0         
+IMPAER   BOND1     1    09/15/2011  -0.0003   
+IMPAER   BOND1     1    09/18/2011  0.01321   
+IMPAER   BOND1     1    09/21/2011  0.01189   
+IMPAER   BOND1     1    09/24/2011  0.00751   
+IMPAER   BOND1     1    09/27/2011  0.00172   
+IMPAER   BOND1     1    09/30/2011  0.00905   
+IMPAER   BOND1     1    10/03/2011  0.00602   
+IMPAER   BOND1     1    10/06/2011  0.02799   
+IMPAER   BOND1     1    10/09/2011  0.04172   
+IMPAER   BOND1     1    10/12/2011  0.00207   
+IMPAER   BOND1     1    10/15/2011  0         
+IMPAER   BOND1     1    10/18/2011  0.027     
+IMPAER   BOND1     1    10/21/2011  0         
+IMPAER   BOND1     1    10/24/2011  0         
+IMPAER   BOND1     1    10/27/2011  0.00797   
+IMPAER   BOND1     1    10/30/2011  0         
+IMPAER   BOND1     1    11/02/2011  0.03174   
+IMPAER   BOND1     1    11/05/2011  0.02982   
+IMPAER   BOND1     1    11/08/2011  0.11783   
+IMPAER   BOND1     1    11/11/2011  0         
+IMPAER   BOND1     1    11/14/2011  0.05424   
+IMPAER   BOND1     1    11/17/2011  0.03015   
+IMPAER   BOND1     1    11/20/2011  0.01451   
+IMPAER   BOND1     1    11/23/2011  0.00352   
+IMPAER   BOND1     1    11/26/2011  0.14236   
+IMPAER   BOND1     1    11/29/2011  0.00094   
+IMPAER   BOND1     1    12/02/2011  0         
+IMPAER   BOND1     1    12/05/2011  0.0238    
+IMPAER   BOND1     1    12/08/2011  0.0075    
+IMPAER   BOND1     1    12/11/2011  0.01661   
+IMPAER   BOND1     1    12/14/2011  0.0069    
+IMPAER   BOND1     1    12/17/2011  0.01575   
+IMPAER   BOND1     1    12/20/2011  0.01947   
+IMPAER   BOND1     1    12/23/2011  0.00113   
+IMPAER   BOND1     1    12/26/2011  0.02499   
+IMPAER   BOND1     1    12/29/2011  0.00959   
+IMPAER   BOND1     1    01/01/2012  0.01174   
+IMPAER   BOND1     1    01/04/2012  0.00462   
+IMPAER   BOND1     1    01/07/2012  -999      
+IMPAER   BOND1     1    01/10/2012  0.01523   
+IMPAER   BOND1     1    01/13/2012  0.07553   
+IMPAER   BOND1     1    01/16/2012  0.04752   
+IMPAER   BOND1     1    01/19/2012  0.07862   
+IMPAER   BOND1     1    01/22/2012  0.01048   
+IMPAER   BOND1     1    01/25/2012  0.00846   
+IMPAER   BOND1     1    01/28/2012  0.02917   
+IMPAER   BOND1     1    01/31/2012  0.04037   
+IMPAER   BOND1     1    02/03/2012  0.00145   
+IMPAER   BOND1     1    02/06/2012  0         
+IMPAER   BOND1     1    02/09/2012  0.03716   
+IMPAER   BOND1     1    02/12/2012  0.08525   
+IMPAER   BOND1     1    02/15/2012  0.01664   
+IMPAER   BOND1     1    02/18/2012  0         
+IMPAER   BOND1     1    02/21/2012  0         
+IMPAER   BOND1     1    02/24/2012  0.0058    
+IMPAER   BOND1     1    02/27/2012  0.00324   
+IMPAER   BOND1     1    03/01/2012  0.01873   
+IMPAER   BOND1     1    03/04/2012  0         
+IMPAER   BOND1     1    03/07/2012  0.07346   
+IMPAER   BOND1     1    03/10/2012  0.02992   
+IMPAER   BOND1     1    03/13/2012  0.01478   
+IMPAER   BOND1     1    03/16/2012  0.05074   
+IMPAER   BOND1     1    03/19/2012  0.15911   
+IMPAER   BOND1     1    03/22/2012  0.11124   
+IMPAER   BOND1     1    03/25/2012  0.01022   
+IMPAER   BOND1     1    03/28/2012  0.01354   
+IMPAER   BOND1     1    03/31/2012  0.01589   
+IMPAER   BOND1     1    04/03/2012  0.07789   
+IMPAER   BOND1     1    04/06/2012  0.01067   
+IMPAER   BOND1     1    04/09/2012  0.02566   
+IMPAER   BOND1     1    04/12/2012  0.01171   
+IMPAER   BOND1     1    04/15/2012  0.10434   
+IMPAER   BOND1     1    04/18/2012  0.02691   
+IMPAER   BOND1     1    04/21/2012  0.01293   
+IMPAER   BOND1     1    04/24/2012  0.02333   
+IMPAER   BOND1     1    04/27/2012  0         
+IMPAER   BOND1     1    04/30/2012  0         
+IMPAER   BOND1     1    05/03/2012  0.07739   
+IMPAER   BOND1     1    05/06/2012  0.04177   
+IMPAER   BOND1     1    05/09/2012  0         
+IMPAER   BOND1     1    05/12/2012  0.02716   
+IMPAER   BOND1     1    05/15/2012  0         
+IMPAER   BOND1     1    05/18/2012  0         
+IMPAER   BOND1     1    05/21/2012  0         
+IMPAER   BOND1     1    05/24/2012  0.00818   
+IMPAER   BOND1     1    05/27/2012  0.06515   
+IMPAER   BOND1     1    05/30/2012  0.00973   
+IMPAER   BOND1     1    06/02/2012  0.01224   
+IMPAER   BOND1     1    06/05/2012  0         
+IMPAER   BOND1     1    06/08/2012  0.00446   
+IMPAER   BOND1     1    06/11/2012  0.01172   
+IMPAER   BOND1     1    06/14/2012  0.02453   
+IMPAER   BOND1     1    06/17/2012  0.00551   
+IMPAER   BOND1     1    06/20/2012  0.12276   
+IMPAER   BOND1     1    06/23/2012  0.00968   
+IMPAER   BOND1     1    06/26/2012  0         
+IMPAER   BOND1     1    06/29/2012  0.02316   
+IMPAER   BOND1     1    07/02/2012  0         
+IMPAER   BOND1     1    07/05/2012  0.08609   
+IMPAER   BOND1     1    07/08/2012  0.01069   
+IMPAER   BOND1     1    07/11/2012  0         
+IMPAER   BOND1     1    07/14/2012  0.01724   
+IMPAER   BOND1     1    07/17/2012  0.02778   
+IMPAER   BOND1     1    07/20/2012  0.0099    
+IMPAER   BOND1     1    07/23/2012  0.02419   
+IMPAER   BOND1     1    07/26/2012  -999      
+IMPAER   BOND1     1    07/29/2012  0.00358   
+IMPAER   BOND1     1    08/01/2012  0         
+IMPAER   BOND1     1    08/04/2012  0.03481   
+IMPAER   BOND1     1    08/07/2012  0.01487   
+IMPAER   BOND1     1    08/10/2012  0.00064   
+IMPAER   BOND1     1    08/13/2012  0.00313   
+IMPAER   BOND1     1    08/16/2012  0.00143   
+IMPAER   BOND1     1    08/19/2012  0.01593   
+IMPAER   BOND1     1    08/22/2012  0         
+IMPAER   BOND1     1    08/25/2012  0.00592   
+IMPAER   BOND1     1    08/28/2012  0         
+IMPAER   BOND1     1    08/31/2012  0.0983    
+IMPAER   BOND1     1    09/03/2012  0.03608   
+IMPAER   BOND1     1    09/06/2012  0         
+IMPAER   BOND1     1    09/09/2012  0         
+IMPAER   BOND1     1    09/12/2012  0.01839   
+IMPAER   BOND1     1    09/15/2012  0.0156    
+IMPAER   BOND1     1    09/18/2012  0.00711   
+IMPAER   BOND1     1    09/21/2012  0.01019   
+IMPAER   BOND1     1    09/24/2012  0.01366   
+IMPAER   BOND1     1    09/27/2012  0.00714   
+IMPAER   BOND1     1    09/30/2012  0.00786   
+IMPAER   BOND1     1    10/03/2012  0         
+IMPAER   BOND1     1    10/06/2012  0.00683   
+IMPAER   BOND1     1    10/09/2012  0.01195   
+IMPAER   BOND1     1    10/12/2012  0.008     
+IMPAER   BOND1     1    10/15/2012  0.0159    
+IMPAER   BOND1     1    10/18/2012  0         
+IMPAER   BOND1     1    10/21/2012  0         
+IMPAER   BOND1     1    10/24/2012  0.0588    
+IMPAER   BOND1     1    10/27/2012  0.01856   
+IMPAER   BOND1     1    10/30/2012  0.01742   
+IMPAER   BOND1     1    11/02/2012  0.01446   
+IMPAER   BOND1     1    11/05/2012  0.04047   
+IMPAER   BOND1     1    11/08/2012  0         
+IMPAER   BOND1     1    11/11/2012  0.01843   
+IMPAER   BOND1     1    11/14/2012  0         
+IMPAER   BOND1     1    11/17/2012  0         
+IMPAER   BOND1     1    11/20/2012  0.02495   
+IMPAER   BOND1     1    11/23/2012  0.03966   
+IMPAER   BOND1     1    11/26/2012  0.03254   
+IMPAER   BOND1     1    11/29/2012  0.01166   
+IMPAER   BOND1     1    12/02/2012  0.0774    
+IMPAER   BOND1     1    12/05/2012  0.01736   
+IMPAER   BOND1     1    12/08/2012  0.00954   
+IMPAER   BOND1     1    12/11/2012  0.01309   
+IMPAER   BOND1     1    12/14/2012  0.00684   
+IMPAER   BOND1     1    12/17/2012  0         
+IMPAER   BOND1     1    12/20/2012  0         
+IMPAER   BOND1     1    12/23/2012  0         
+IMPAER   BOND1     1    12/26/2012  0.01438   
+IMPAER   BOND1     1    12/29/2012  0         
+IMPAER   BOND1     1    01/01/2013  0.0055    
+IMPAER   BOND1     1    01/04/2013  0.00907   
+IMPAER   BOND1     1    01/07/2013  0.00547   
+IMPAER   BOND1     1    01/10/2013  0.0101    
+IMPAER   BOND1     1    01/13/2013  0.0779    
+IMPAER   BOND1     1    01/16/2013  0.04237   
+IMPAER   BOND1     1    01/19/2013  0         
+IMPAER   BOND1     1    01/22/2013  0.03781   
+IMPAER   BOND1     1    01/25/2013  0.02241   
+IMPAER   BOND1     1    01/28/2013  0.01425   
+IMPAER   BOND1     1    01/31/2013  0.03409   
+IMPAER   BOND1     1    02/03/2013  0.01049   
+IMPAER   BOND1     1    02/06/2013  0.00735   
+IMPAER   BOND1     1    02/09/2013  0         
+IMPAER   BOND1     1    02/12/2013  0.04217   
+IMPAER   BOND1     1    02/15/2013  0.02927   
+IMPAER   BOND1     1    02/18/2013  0.0398    
+IMPAER   BOND1     1    02/21/2013  0         
+IMPAER   BOND1     1    02/24/2013  0.01184   
+IMPAER   BOND1     1    02/27/2013  0         
+IMPAER   BOND1     1    03/02/2013  0.00524   
+IMPAER   BOND1     1    03/05/2013  0         
+IMPAER   BOND1     1    03/08/2013  0         
+IMPAER   BOND1     1    03/11/2013  0.00183   
+IMPAER   BOND1     1    03/14/2013  0.00092   
+IMPAER   BOND1     1    03/17/2013  0.00633   
+IMPAER   BOND1     1    03/20/2013  0.05469   
+IMPAER   BOND1     1    03/23/2013  0.01586   
+IMPAER   BOND1     1    03/26/2013  0.01076   
+IMPAER   BOND1     1    03/29/2013  0         
+IMPAER   BOND1     1    04/01/2013  0.00395   
+IMPAER   BOND1     1    04/04/2013  0.01509   
+IMPAER   BOND1     1    04/07/2013  0         
+IMPAER   BOND1     1    04/10/2013  0.11144   
+IMPAER   BOND1     1    04/13/2013  0.01166   
+IMPAER   BOND1     1    04/16/2013  0.00338   
+IMPAER   BOND1     1    04/19/2013  0.00242   
+IMPAER   BOND1     1    04/22/2013  0.02981   
+IMPAER   BOND1     1    04/25/2013  0.00776   
+IMPAER   BOND1     1    04/28/2013  0         
+IMPAER   BOND1     1    05/01/2013  0.01297   
+IMPAER   BOND1     1    05/04/2013  0.06573   
+IMPAER   BOND1     1    05/07/2013  0.12047   
+IMPAER   BOND1     1    05/10/2013  0         
+IMPAER   BOND1     1    05/13/2013  0         
+IMPAER   BOND1     1    05/16/2013  0.01947   
+IMPAER   BOND1     1    05/19/2013  0.05535   
+IMPAER   BOND1     1    05/22/2013  0         
+IMPAER   BOND1     1    05/25/2013  0.01681   
+IMPAER   BOND1     1    05/28/2013  0.07963   
+IMPAER   BOND1     1    05/31/2013  0.01476   
+IMPAER   BOND1     1    06/03/2013  0         
+IMPAER   BOND1     1    06/06/2013  -999      
+IMPAER   BOND1     1    06/09/2013  0.01273   
+IMPAER   BOND1     1    06/12/2013  -999      
+IMPAER   BOND1     1    06/15/2013  -999      
+IMPAER   BOND1     1    06/18/2013  0.00144   
+IMPAER   BOND1     1    06/21/2013  0.00888   
+IMPAER   BOND1     1    06/24/2013  0.03948   
+IMPAER   BOND1     1    06/27/2013  -999      
+IMPAER   BOND1     1    06/30/2013  -999      
+IMPAER   BOND1     1    07/03/2013  -999      
+IMPAER   BOND1     1    07/06/2013  0.03466   
+IMPAER   BOND1     1    07/09/2013  0.03499   
+IMPAER   BOND1     1    07/12/2013  0         
+IMPAER   BOND1     1    07/15/2013  0.02225   
+IMPAER   BOND1     1    07/18/2013  0.08242   
+IMPAER   BOND1     1    07/21/2013  0.01572   
+IMPAER   BOND1     1    07/24/2013  0.00739   
+IMPAER   BOND1     1    07/27/2013  0         
+IMPAER   BOND1     1    07/30/2013  0.0271    
+IMPAER   BOND1     1    08/02/2013  0.00436   
+IMPAER   BOND1     1    08/05/2013  0.01045   
+IMPAER   BOND1     1    08/08/2013  0         
+IMPAER   BOND1     1    08/11/2013  0.00845   
+IMPAER   BOND1     1    08/14/2013  0         
+IMPAER   BOND1     1    08/17/2013  0.01895   
+IMPAER   BOND1     1    08/20/2013  0.0186    
+IMPAER   BOND1     1    08/23/2013  0         
+IMPAER   BOND1     1    08/26/2013  0.0273    
+IMPAER   BOND1     1    08/29/2013  0.01499   
+IMPAER   BOND1     1    09/01/2013  0.03548   
+IMPAER   BOND1     1    09/04/2013  0.008     
+IMPAER   BOND1     1    09/07/2013  0.03142   
+IMPAER   BOND1     1    09/10/2013  0.05844   
+IMPAER   BOND1     1    09/13/2013  0         
+IMPAER   BOND1     1    09/16/2013  0.00787   
+IMPAER   BOND1     1    09/19/2013  0.03575   
+IMPAER   BOND1     1    09/22/2013  0         
+IMPAER   BOND1     1    09/25/2013  0         
+IMPAER   BOND1     1    09/28/2013  0         
+IMPAER   BOND1     1    10/01/2013  0         
+IMPAER   BOND1     1    10/04/2013  0.05044   
+IMPAER   BOND1     1    10/07/2013  0         
+IMPAER   BOND1     1    10/10/2013  0.01992   
+IMPAER   BOND1     1    10/13/2013  0.00327   
+IMPAER   BOND1     1    10/16/2013  0.00099   
+IMPAER   BOND1     1    10/19/2013  0         
+IMPAER   BOND1     1    10/22/2013  0.00818   
+IMPAER   BOND1     1    10/25/2013  0.01488   
+IMPAER   BOND1     1    10/28/2013  0.00083   
+IMPAER   BOND1     1    10/31/2013  0.00408   
+IMPAER   BOND1     1    11/03/2013  0         
+IMPAER   BOND1     1    11/06/2013  0         
+IMPAER   BOND1     1    11/09/2013  0         
+IMPAER   BOND1     1    11/12/2013  0.01727   
+IMPAER   BOND1     1    11/15/2013  0         
+IMPAER   BOND1     1    11/18/2013  0         
+IMPAER   BOND1     1    11/21/2013  0.00241   
+IMPAER   BOND1     1    11/24/2013  0.03804   
+IMPAER   BOND1     1    11/27/2013  0.06102   
+IMPAER   BOND1     1    11/30/2013  0.0269    
+IMPAER   BOND1     1    12/03/2013  0.03832   
+IMPAER   BOND1     1    12/06/2013  0.01355   
+IMPAER   BOND1     1    12/09/2013  0.0365    
+IMPAER   BOND1     1    12/12/2013  0.04252   
+IMPAER   BOND1     1    12/15/2013  0.00985   
+IMPAER   BOND1     1    12/18/2013  0.02727   
+IMPAER   BOND1     1    12/21/2013  0.00661   
+IMPAER   BOND1     1    12/24/2013  0.0329    
+IMPAER   BOND1     1    12/27/2013  0.00523   
+IMPAER   BOND1     1    12/30/2013  0.16296   
+IMPAER   BOND1     1    01/02/2014  0.07419   
+IMPAER   BOND1     1    01/05/2014  0.00097   
+IMPAER   BOND1     1    01/08/2014  -999      
+IMPAER   BOND1     1    01/11/2014  -999      
+IMPAER   BOND1     1    01/14/2014  0.0131    
+IMPAER   BOND1     1    01/17/2014  0.02353   
+IMPAER   BOND1     1    01/20/2014  0.01281   
+IMPAER   BOND1     1    01/23/2014  0.07257   
+IMPAER   BOND1     1    01/26/2014  -999      
+IMPAER   BOND1     1    01/29/2014  0.02709   
+IMPAER   BOND1     1    02/01/2014  0.01728   
+IMPAER   BOND1     1    02/04/2014  0.04659   
+IMPAER   BOND1     1    02/07/2014  0.04161   
+IMPAER   BOND1     1    02/10/2014  0.20426   
+IMPAER   BOND1     1    02/13/2014  0.04556   
+IMPAER   BOND1     1    02/16/2014  0.03818   
+IMPAER   BOND1     1    02/19/2014  0.01538   
+IMPAER   BOND1     1    02/22/2014  0.01019   
+IMPAER   BOND1     1    02/25/2014  0.03085   
+IMPAER   BOND1     1    02/28/2014  0.05093   
+IMPAER   BOND1     1    03/03/2014  0.10486   
+IMPAER   BOND1     1    03/06/2014  0.04069   
+IMPAER   BOND1     1    03/09/2014  0.01662   
+IMPAER   BOND1     1    03/12/2014  0.02574   
+IMPAER   BOND1     1    03/15/2014  0.01841   
+IMPAER   BOND1     1    03/18/2014  0.03082   
+IMPAER   BOND1     1    03/21/2014  0         
+IMPAER   BOND1     1    03/24/2014  0.03967   
+IMPAER   BOND1     1    03/27/2014  0.03276   
+IMPAER   BOND1     1    03/30/2014  0.0064    
+IMPAER   BOND1     1    04/02/2014  0.01072   
+IMPAER   BOND1     1    04/05/2014  0.00943   
+IMPAER   BOND1     1    04/08/2014  0.00563   
+IMPAER   BOND1     1    04/11/2014  0.01328   
+IMPAER   BOND1     1    04/14/2014  -0.00075  
+IMPAER   BOND1     1    04/17/2014  0.01293   
+IMPAER   BOND1     1    04/20/2014  0.02871   
+IMPAER   BOND1     1    04/23/2014  0.00503   
+IMPAER   BOND1     1    04/26/2014  0.00538   
+IMPAER   BOND1     1    04/29/2014  0.00027   
+IMPAER   BOND1     1    05/02/2014  -0.00075  
+IMPAER   BOND1     1    05/05/2014  0.0117    
+IMPAER   BOND1     1    05/08/2014  0.06375   
+IMPAER   BOND1     1    05/11/2014  0.03642   
+IMPAER   BOND1     1    05/14/2014  0.00429   
+IMPAER   BOND1     1    05/17/2014  0         
+IMPAER   BOND1     1    05/20/2014  0.09836   
+IMPAER   BOND1     1    05/23/2014  0         
+IMPAER   BOND1     1    05/26/2014  0.0787    
+IMPAER   BOND1     1    05/29/2014  0.02844   
+IMPAER   BOND1     1    06/01/2014  0.02542   
+IMPAER   BOND1     1    06/04/2014  0         
+IMPAER   BOND1     1    06/07/2014  0.02572   
+IMPAER   BOND1     1    06/10/2014  0.03039   
+IMPAER   BOND1     1    06/13/2014  0.00216   
+IMPAER   BOND1     1    06/16/2014  0.1027    
+IMPAER   BOND1     1    06/19/2014  0.15298   
+IMPAER   BOND1     1    06/22/2014  0.01261   
+IMPAER   BOND1     1    06/25/2014  0.00815   
+IMPAER   BOND1     1    06/28/2014  0.08067   
+IMPAER   BOND1     1    07/01/2014  0.02816   
+IMPAER   BOND1     1    07/04/2014  0.00566   
+IMPAER   BOND1     1    07/07/2014  0.01308   
+IMPAER   BOND1     1    07/10/2014  0.00515   
+IMPAER   BOND1     1    07/13/2014  0.03899   
+IMPAER   BOND1     1    07/16/2014  0.01382   
+IMPAER   BOND1     1    07/19/2014  0.04674   
+IMPAER   BOND1     1    07/22/2014  0.01446   
+IMPAER   BOND1     1    07/25/2014  0.01646   
+IMPAER   BOND1     1    07/28/2014  0.01691   
+IMPAER   BOND1     1    07/31/2014  0         
+IMPAER   BOND1     1    08/03/2014  0         
+IMPAER   BOND1     1    08/06/2014  0.02896   
+IMPAER   BOND1     1    08/09/2014  0.00437   
+IMPAER   BOND1     1    08/12/2014  0         
+IMPAER   BOND1     1    08/15/2014  0.00371   
+IMPAER   BOND1     1    08/18/2014  0.00181   
+IMPAER   BOND1     1    08/21/2014  0.10144   
+IMPAER   BOND1     1    08/24/2014  0.05566   
+IMPAER   BOND1     1    08/27/2014  0.01452   
+IMPAER   BOND1     1    08/30/2014  0.04555   

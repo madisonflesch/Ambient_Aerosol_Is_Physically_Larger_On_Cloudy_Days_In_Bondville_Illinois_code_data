@@ -1,0 +1,641 @@
+Overview
+
+Overview                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+IMPROVE Data Use: For journal publications, please inform Loretta Wilson (loretta.wilson@colostate.edu) of the planned publication.  Drafts of publications will be reviewed upon request for issues that could affect the data interpretation.
+
+Preferred Reference: Please reference the Malm,et al. (1994) article below when using IMPROVE data.
+
+Malm, W. C., J. F. Sisler, D. Huffman, R. A. Eldred, and T. A. Cahill (1994), Spatial and seasonal trends in particle concentration and optical extinction in the United States, J. Geophys. Res., 99, 1347-1370.
+
+Preferred Acknowledgment:  IMPROVE is a collaborative association of state, tribal, and federal agencies, and international partners.  US Environmental Protection Agency is the primary funding source, with contracting and research support from the National Park Service. The Air Quality Group at the University of California, Davis is the central analytical laboratory, with ion analysis provided by Research Triangle Institute, and carbon analysis provided by Desert Research Institute.  
+
+(Also: Prior to use, all data users are encouraged to review the IMPROVE data advisories located on the IMPROVE website: http://vista.cira.colostate.edu/IMPROVE/Data/QA_QC/Advisory.htm)
+
+Regional Haze Implementation Guidance Documents: http://vista.cira.colostate.edu/IMPROVE/Publications/GuidanceDocs/guidancedocs.htm
+
+Revised IMPROVE Algorithm (Microsoft Word document): http://vista.cira.colostate.edu/IMPROVE/Publications/GrayLit/019_RevisedIMPROVEeq/RevisedIMPROVEAlgorithm3.doc
+
+Natural Haze Levels II:Application of the New IMPROVE Algorithm to Natural Species Concentrations Estimates (Microsoft PowerPoint document): http://vista.cira.colostate.edu/IMPROVE/Publications/GrayLit/029_NaturalCondII/naturalhazelevelsIIreport.ppt
+  
+
+Datasets
+
+Dataset                 Code     StartDate             EndDate                 Frequency   NumRecords  
+IMPROVE RHR Metrics II  IMPRHR2  3/2/1988 12:00:00 AM  12/29/2019 12:00:00 AM  1-in-3 day  11671690    
+
+Sites
+
+Site       Code   Dataset  Country  State  County  AQSCode    Latitude  Longitude  Elevation  StartDate   EndDate     DemographicCode  LandUseCode  StreetAddress  LocDesc  Sponsor  ProgramKey  NumPOCs  
+Bondville  BOND1  IMPRHR2  US       IL     17019   170191001  40.05200  -88.37330  263        03/08/2001  12/29/2019  -999             Unknown      -999           -999     EPA      IMPROVE     1        
+
+Parameters
+
+ParamID  ParamCode  ParamName                       AQSCode  Units    Description                                                                                                                                                                                                                                                                                                                                                                                                          
+907      ammNO3f    Ammonium Nitrate (Fine)         88344    µg/m^3   -999                                                                                                                                                                                                                                                                                                                                                                                                                 
+900      ammSO4f    Ammonium Sulfate (Fine)         88339    µg/m^3   If particulate Sulfur (Sf) is non-null, then ammSO4f is calculated as 4.125 * Sulfur.  Otherwise, it is calculated as 1.375 * Sulfate (SO4f).  If the concentration of the base parameter (Sf or SO4f) is below the minimum detection limit, then 0.5 * MDL is used.  (NOTE:  The calculation procedure for RHR datasets differs from this. Please see the RHR guidance documents detailed calculation procedures.)  
+114      ECf        Carbon, Elemental Total (Fine)  88307    µg/m^3   From TOR carbon fractions (E1+E2+E3-OP)                                                                                                                                                                                                                                                                                                                                                                              
+911      SOILf      Soil (Fine)                     88348    µg/m^3   -999                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+Site History
+
+History  Dataset  EntryType  EntryDate  Description  
+
+Dataset History
+
+History  EntryType  EntryDate  Description  
+
+Status Flags
+
+Status Flag  Description                                                                         
+H1           Historical data that have not been assessed or validated.                           
+I0           Invalid value - unknown reason                                                      
+I1           Invalid value - known reason                                                        
+I2           Invalid value (-999), though sample-level flag seems valid (SEM)                    
+M1           Missing value because no value is available                                         
+M2           Missing value because invalidated by data originator                                
+M3           Missing value due to clogged filter                                                 
+NA           Not available from source data                                                      
+V0           Valid value                                                                         
+V1           Valid value but comprised wholly or partially of below detection limit data         
+V2           Valid estimated value                                                               
+V3           Valid interpolated value                                                            
+V4           Valid value despite failing to meet some QC or statistical criteria                 
+V5           Valid value but qualified because of possible contamination                         
+V6           Valid value but qualified due to non-standard sampling conditions                   
+V7           Valid value set equal to the detection limit (DL) since the value was below the DL  
+VE           Valid value during air quality event                                                
+VM           Valid modeled value                                                                 
+VS           Valid substituted value                                                             
+
+Data
+
+Dataset  SiteCode  POC  Date        ammNO3f:Val  ammSO4f:Val  ECf:Val  SOILf:Val  
+IMPRHR2  BOND1     1    01/02/2010  7.48032      1.82473      0.2484   0.23072    
+IMPRHR2  BOND1     1    01/05/2010  10.93662     2.46898      0.3254   0.38518    
+IMPRHR2  BOND1     1    01/08/2010  4.10723      1.44631      0.2019   0.28902    
+IMPRHR2  BOND1     1    01/11/2010  9.11901      2.0752       0.2727   0.30512    
+IMPRHR2  BOND1     1    01/14/2010  6.00276      2.5761       0.6254   0.53536    
+IMPRHR2  BOND1     1    01/17/2010  2.30923      3.63268      0.1947   0.03635    
+IMPRHR2  BOND1     1    01/20/2010  7.20401      4.3251       0.3246   0.30854    
+IMPRHR2  BOND1     1    01/23/2010  4.94522      4.54723      0.4639   0.3942     
+IMPRHR2  BOND1     1    01/26/2010  1.12591      2.32984      0.0319   0.56802    
+IMPRHR2  BOND1     1    01/29/2010  5.66         1.69125      0.2707   0.25814    
+IMPRHR2  BOND1     1    02/01/2010  11.235       3.49124      0.4965   0.44845    
+IMPRHR2  BOND1     1    02/04/2010  16.3354      6.00014      0.6275   0.4786     
+IMPRHR2  BOND1     1    02/07/2010  5.00391      2.56963      0.2464   0.21702    
+IMPRHR2  BOND1     1    02/10/2010  3.52751      1.22141      0.0826   0.16171    
+IMPRHR2  BOND1     1    02/13/2010  8.70879      3.40213      0.2234   0.24188    
+IMPRHR2  BOND1     1    02/16/2010  5.8446       1.46937      0.1174   0.24097    
+IMPRHR2  BOND1     1    02/19/2010  19.60374     2.91081      0.4833   0.51557    
+IMPRHR2  BOND1     1    02/22/2010  8.72092      5.86917      0.386    0.35502    
+IMPRHR2  BOND1     1    02/25/2010  3.52286      1.79829      0.1451   0.228      
+IMPRHR2  BOND1     1    02/28/2010  8.58185      1.58408      0.2058   0.4001     
+IMPRHR2  BOND1     1    03/03/2010  4.06144      2.29259      0.1741   0.30278    
+IMPRHR2  BOND1     1    03/06/2010  8.18595      2.56839      0.3661   0.37019    
+IMPRHR2  BOND1     1    03/09/2010  7.79018      5.83329      0.8998   0.5842     
+IMPRHR2  BOND1     1    03/12/2010  2.97642      2.15354      0.2482   0.26066    
+IMPRHR2  BOND1     1    03/15/2010  1.53678      2.09406      0.2095   0.27824    
+IMPRHR2  BOND1     1    03/18/2010  4.39245      3.35515      0.5008   0.42232    
+IMPRHR2  BOND1     1    03/21/2010  4.35014      2.14104      0.3012   0.35021    
+IMPRHR2  BOND1     1    03/24/2010  2.51563      3.91628      0.8585   1.05184    
+IMPRHR2  BOND1     1    03/27/2010  2.33026      2.98543      0.2968   0.48938    
+IMPRHR2  BOND1     1    03/30/2010  2.32471      3.5454       0.3632   0.75555    
+IMPRHR2  BOND1     1    04/02/2010  0.61959      3.1369       0.4041   2.4463     
+IMPRHR2  BOND1     1    04/05/2010  1.032        4.87208      0.3017   1.11585    
+IMPRHR2  BOND1     1    04/08/2010  0.69957      1.21914      0.0752   0.26981    
+IMPRHR2  BOND1     1    04/11/2010  2.86548      3.38106      0.697    1.47048    
+IMPRHR2  BOND1     1    04/14/2010  3.23893      6.03768      0.7579   1.64116    
+IMPRHR2  BOND1     1    04/17/2010  0.60733      1.13194      0.1814   1.08176    
+IMPRHR2  BOND1     1    04/20/2010  2.39772      2.58501      0.4205   1.07155    
+IMPRHR2  BOND1     1    04/23/2010  6.18052      6.26588      0.5188   1.53268    
+IMPRHR2  BOND1     1    04/26/2010  1.26639      1.73572      0.1596   0.95367    
+IMPRHR2  BOND1     1    04/29/2010  1.016        3.08336      0.2525   0.96868    
+IMPRHR2  BOND1     1    05/02/2010  0.79451      2.17903      0.0821   0.56351    
+IMPRHR2  BOND1     1    05/05/2010  0.37449      1.79937      0.34201  1.22722    
+IMPRHR2  BOND1     1    05/08/2010  0.38855      1.65078      0.0694   0.41829    
+IMPRHR2  BOND1     1    05/11/2010  0.84572      2.66809      0.1814   0.45473    
+IMPRHR2  BOND1     1    05/14/2010  0.43834      1.52035      0.1245   0.24648    
+IMPRHR2  BOND1     1    05/17/2010  1.68035      1.82688      0.3077   0.4029     
+IMPRHR2  BOND1     1    05/20/2010  1.85489      6.61609      0.3676   0.52568    
+IMPRHR2  BOND1     1    05/23/2010  0.53483      4.84588      0.3465   0.46213    
+IMPRHR2  BOND1     1    05/26/2010  1.73337      11.16988     0.6204   1.19899    
+IMPRHR2  BOND1     1    05/29/2010  0.73311      6.82085      0.5347   0.95263    
+IMPRHR2  BOND1     1    06/01/2010  1.50388      6.52154      0.3451   0.45771    
+IMPRHR2  BOND1     1    06/04/2010  1.20357      5.90869      0.3356   0.72582    
+IMPRHR2  BOND1     1    06/07/2010  0.50323      2.08139      0.2122   0.72525    
+IMPRHR2  BOND1     1    06/10/2010  0.41861      2.25448      0.2874   0.46196    
+IMPRHR2  BOND1     1    06/13/2010  0.53406      2.38         0.0715   0.44867    
+IMPRHR2  BOND1     1    06/16/2010  0.26406      1.57109      0.1303   0.34068    
+IMPRHR2  BOND1     1    06/19/2010  0.13945      0.93415      0.1664   0.34108    
+IMPRHR2  BOND1     1    06/22/2010  0.13003      2.04666      0.1831   0.36307    
+IMPRHR2  BOND1     1    06/25/2010  0.633        2.63711      0.3466   0.26958    
+IMPRHR2  BOND1     1    06/28/2010  0.28006      2.43569      0.1221   0.54144    
+IMPRHR2  BOND1     1    07/01/2010  0.33488      1.77         0.3317   0.45994    
+IMPRHR2  BOND1     1    07/04/2010  0.56063      7.79662      0.4323   1.21326    
+IMPRHR2  BOND1     1    07/07/2010  0.37823      5.92202      0.4642   0.80197    
+IMPRHR2  BOND1     1    07/10/2010  0.49317      3.29802      0.3572   0.53875    
+IMPRHR2  BOND1     1    07/13/2010  0.72988      6.18907      0.6395   0.52516    
+IMPRHR2  BOND1     1    07/16/2010  0.28664      1.81083      0.3162   0.51031    
+IMPRHR2  BOND1     1    07/19/2010  0.48672      1.53005      0.2195   0.43906    
+IMPRHR2  BOND1     1    07/22/2010  0.49381      4.85084      0.3847   2.85465    
+IMPRHR2  BOND1     1    07/25/2010  0.25078      2.28702      0.191    0.2621     
+IMPRHR2  BOND1     1    07/28/2010  0.42957      4.45323      0.334    2.10605    
+IMPRHR2  BOND1     1    07/31/2010  0.52671      7.75001      0.5191   0.74859    
+IMPRHR2  BOND1     1    08/03/2010  0.47266      11.14204     0.6206   0.58888    
+IMPRHR2  BOND1     1    08/06/2010  0.43099      2.30368      0.6239   0.58888    
+IMPRHR2  BOND1     1    08/09/2010  0.39319      8.94768      0.576    0.58888    
+IMPRHR2  BOND1     1    08/12/2010  0.47343      4.28608      0.5733   0.68243    
+IMPRHR2  BOND1     1    08/15/2010  0.31411      2.59083      0.2881   0.45775    
+IMPRHR2  BOND1     1    08/18/2010  0.58566      3.37474      0.6796   0.60057    
+IMPRHR2  BOND1     1    08/21/2010  0.83257      6.82407      0.2501   0.43511    
+IMPRHR2  BOND1     1    08/24/2010  0.5418       5.49627      0.5489   0.66774    
+IMPRHR2  BOND1     1    08/27/2010  0.25374      1.57377      0.4047   0.43338    
+IMPRHR2  BOND1     1    08/30/2010  0.27129      4.74259      0.3152   0.5731     
+IMPRHR2  BOND1     1    09/02/2010  0.51316      2.4394       0.3437   0.36768    
+IMPRHR2  BOND1     1    09/05/2010  0.2202       1.40089      0.2876   0.33586    
+IMPRHR2  BOND1     1    09/08/2010  0.2958       1.52299      0.3089   1.02754    
+IMPRHR2  BOND1     1    09/11/2010  0.87436      3.53904      0.3496   0.39546    
+IMPRHR2  BOND1     1    09/14/2010  0.43151      2.34865      0.686    0.75058    
+IMPRHR2  BOND1     1    09/17/2010  0.94892      1.90616      0.3398   0.34195    
+IMPRHR2  BOND1     1    09/20/2010  0.37629      4.57116      0.4824   0.58952    
+IMPRHR2  BOND1     1    09/23/2010  0.81193      4.86465      0.5433   0.83795    
+IMPRHR2  BOND1     1    09/26/2010  0.96956      1.60417      0.1406   0.16438    
+IMPRHR2  BOND1     1    09/29/2010  0.97859      3.79838      0.4726   0.77024    
+IMPRHR2  BOND1     1    10/02/2010  0.74768      1.37585      0.1615   0.21795    
+IMPRHR2  BOND1     1    10/05/2010  1.38056      1.54337      0.4946   1.02702    
+IMPRHR2  BOND1     1    10/08/2010  0.85617      1.56936      0.6604   1.84188    
+IMPRHR2  BOND1     1    10/11/2010  0.63107      2.66339      0.6608   1.5521     
+IMPRHR2  BOND1     1    10/14/2010  0.38571      0.80363      0.2093   0.78706    
+IMPRHR2  BOND1     1    10/17/2010  0.81296      1.34071      0.5353   1.2388     
+IMPRHR2  BOND1     1    10/20/2010  0.9488       1.50435      0.3368   1.24439    
+IMPRHR2  BOND1     1    10/23/2010  0.26174      1.9562       0.4687   1.12343    
+IMPRHR2  BOND1     1    10/26/2010  0.11507      1.93033      0.0984   0.29503    
+IMPRHR2  BOND1     1    10/29/2010  3.56646      1.48727      0.2297   0.40191    
+IMPRHR2  BOND1     1    11/01/2010  1.29748      0.71989      0.2169   0.2851     
+IMPRHR2  BOND1     1    11/04/2010  0.69905      0.61933      0.161    0.40889    
+IMPRHR2  BOND1     1    11/07/2010  3.49139      1.7181       0.3465   0.57348    
+IMPRHR2  BOND1     1    11/10/2010  3.23726      3.73007      0.6346   0.71018    
+IMPRHR2  BOND1     1    11/13/2010  1.87308      3.93071      0.3605   0.50987    
+IMPRHR2  BOND1     1    11/16/2010  8.09836      3.50666      0.6978   0.90433    
+IMPRHR2  BOND1     1    11/19/2010  7.22722      5.63801      0.5714   0.43063    
+IMPRHR2  BOND1     1    11/22/2010  1.03819      3.49788      0.246    0.42385    
+IMPRHR2  BOND1     1    11/25/2010  2.26318      1.76208      0.1311   0.18689    
+IMPRHR2  BOND1     1    11/28/2010  3.55214      4.05785      0.4276   0.32578    
+IMPRHR2  BOND1     1    12/01/2010  1.47215      2.74201      0.0957   0.21205    
+IMPRHR2  BOND1     1    12/04/2010  4.51061      3.15657      0.3921   0.26862    
+IMPRHR2  BOND1     1    12/07/2010  5.40355      2.99194      0.3016   0.278      
+IMPRHR2  BOND1     1    12/10/2010  7.75045      3.65611      0.6145   0.56472    
+IMPRHR2  BOND1     1    12/13/2010  1.35553      1.2304       0.1479   0.3688     
+IMPRHR2  BOND1     1    12/16/2010  4.99359      3.35907      0.3852   0.39863    
+IMPRHR2  BOND1     1    12/19/2010  7.82707      3.37586      0.2984   0.22307    
+IMPRHR2  BOND1     1    12/22/2010  8.6372       3.88344      0.2794   0.3086     
+IMPRHR2  BOND1     1    12/25/2010  3.97294      1.84718      0.1975   0.05337    
+IMPRHR2  BOND1     1    12/28/2010  5.93374      3.82272      0.4168   0.31076    
+IMPRHR2  BOND1     1    12/31/2010  0.72085      4.10615      0.3667   0.48158    
+IMPRHR2  BOND1     1    01/03/2011  1.47021      0.84476      0.2097   0.22082    
+IMPRHR2  BOND1     1    01/06/2011  3.93385      2.76771      0.1913   0.30346    
+IMPRHR2  BOND1     1    01/09/2011  2.61302      1.75894      0.3021   0.21624    
+IMPRHR2  BOND1     1    01/12/2011  11.2408      3.37128      0.2631   0.20861    
+IMPRHR2  BOND1     1    01/15/2011  13.91471     4.04456      0.4061   0.25832    
+IMPRHR2  BOND1     1    01/18/2011  7.27586      4.17037      0.4576   0.11548    
+IMPRHR2  BOND1     1    01/21/2011  5.33054      2.6082       0.2245   0.28619    
+IMPRHR2  BOND1     1    01/24/2011  7.68401      7.3234       0.3854   0.21242    
+IMPRHR2  BOND1     1    01/27/2011  6.48586      5.92923      0.3109   0.17651    
+IMPRHR2  BOND1     1    01/30/2011  7.90125      3.71118      0.3435   0.09602    
+IMPRHR2  BOND1     1    02/02/2011  0.99717      1.1074       0.1545   0.30388    
+IMPRHR2  BOND1     1    02/05/2011  3.24783      3.34467      0.3032   0.19059    
+IMPRHR2  BOND1     1    02/08/2011  6.15936      1.74302      0.1917   0.24881    
+IMPRHR2  BOND1     1    02/11/2011  4.66567      1.50129      0.2584   0.27219    
+IMPRHR2  BOND1     1    02/14/2011  2.94636      2.19867      0.164    0.16748    
+IMPRHR2  BOND1     1    02/17/2011  1.67829      4.5422       0.4785   0.26522    
+IMPRHR2  BOND1     1    02/20/2011  1.99111      2.67304      0.3414   0.21027    
+IMPRHR2  BOND1     1    02/23/2011  6.15936      5.03196      0.2839   0.20178    
+IMPRHR2  BOND1     1    02/26/2011  3.07136      5.64832      0.2368   0.10475    
+IMPRHR2  BOND1     1    03/01/2011  6.80191      3.21544      0.328    0.18532    
+IMPRHR2  BOND1     1    03/04/2011  1.4141       3.32091      0.5925   0.38717    
+IMPRHR2  BOND1     1    03/07/2011  1.04374      5.18149      0.1819   0.10758    
+IMPRHR2  BOND1     1    03/10/2011  2.16307      4.6056       0.2409   0.09807    
+IMPRHR2  BOND1     1    03/13/2011  2.82523      3.57328      0.195    0.21542    
+IMPRHR2  BOND1     1    03/16/2011  5.37904      3.04582      0.4016   0.28022    
+IMPRHR2  BOND1     1    03/19/2011  3.09755      1.76876      0.2667   0.10349    
+IMPRHR2  BOND1     1    03/22/2011  3.70836      4.89068      0.4953   0.664      
+IMPRHR2  BOND1     1    03/25/2011  2.32471      2.09005      0.1136   0.24904    
+IMPRHR2  BOND1     1    03/28/2011  1.82109      1.353        0.1871   0.2453     
+IMPRHR2  BOND1     1    03/31/2011  6.48857      4.15045      0.4442   0.55164    
+IMPRHR2  BOND1     1    04/03/2011  0.70331      3.38514      0.3839   1.1562     
+IMPRHR2  BOND1     1    04/06/2011  1.16964      1.59006      0.3503   0.70402    
+IMPRHR2  BOND1     1    04/09/2011  7.42614      5.59837      0.4912   0.46842    
+IMPRHR2  BOND1     1    04/12/2011  0.69479      1.48521      0.2108   0.33989    
+IMPRHR2  BOND1     1    04/15/2011  2.0858       2.65023      0.3956   0.878      
+IMPRHR2  BOND1     1    04/18/2011  4.22552      3.32211      0.2862   0.52274    
+IMPRHR2  BOND1     1    04/21/2011  2.23441      1.98652      0.1968   0.14695    
+IMPRHR2  BOND1     1    04/24/2011  0.92132      1.37053      0.1591   0.10506    
+IMPRHR2  BOND1     1    04/27/2011  0.88197      2.06399      0.1647   0.13354    
+IMPRHR2  BOND1     1    04/30/2011  0.27         2.18151      0.2624   0.24347    
+IMPRHR2  BOND1     1    05/03/2011  3.18759      2.64668      0.2211   0.37621    
+IMPRHR2  BOND1     1    05/06/2011  1.44738      1.78047      0.125    0.19809    
+IMPRHR2  BOND1     1    05/09/2011  0.61378      6.75411      0.3569   0.4427     
+IMPRHR2  BOND1     1    05/12/2011  0.82173      4.31949      0.5693   0.84086    
+IMPRHR2  BOND1     1    05/15/2011  0.43899      1.23292      0.0908   0.10944    
+IMPRHR2  BOND1     1    05/18/2011  1.66191      2.21236      0.3588   0.36654    
+IMPRHR2  BOND1     1    05/21/2011  1.11559      6.28963      0.6071   0.55546    
+IMPRHR2  BOND1     1    05/24/2011  0.94802      2.82711      0.3506   0.36994    
+IMPRHR2  BOND1     1    05/27/2011  1.12927      2.64825      0.192    0.17164    
+IMPRHR2  BOND1     1    05/30/2011  0.31579      3.85151      0.3117   0.45562    
+IMPRHR2  BOND1     1    06/02/2011  0.40661      2.95796      0.6237   0.4469     
+IMPRHR2  BOND1     1    06/05/2011  1.01368      3.63062      0.3488   0.92745    
+IMPRHR2  BOND1     1    06/08/2011  0.45292      7.66664      0.6841   1.03939    
+IMPRHR2  BOND1     1    06/11/2011  1.05083      4.23039      0.2309   0.35069    
+IMPRHR2  BOND1     1    06/14/2011  0.99743      5.15171      0.5026   0.24748    
+IMPRHR2  BOND1     1    06/17/2011  0.8603       3.75247      0.5952   0.49819    
+IMPRHR2  BOND1     1    06/20/2011  0.63081      3.97027      0.2614   0.55167    
+IMPRHR2  BOND1     1    06/23/2011  0.06785      0.85293      0.0539   0.07045    
+IMPRHR2  BOND1     1    06/26/2011  0.55767      6.1738       0.4019   0.17251    
+IMPRHR2  BOND1     1    06/29/2011  0.46247      2.12116      0.2346   0.30094    
+IMPRHR2  BOND1     1    07/02/2011  0.5218       7.64994      0.5954   0.76278    
+IMPRHR2  BOND1     1    07/05/2011  1.04903      3.60801      0.4844   0.43344    
+IMPRHR2  BOND1     1    07/08/2011  1.32883      3.99873      0.625    1.18422    
+IMPRHR2  BOND1     1    07/11/2011  0.37978      7.03242      0.4728   0.91697    
+IMPRHR2  BOND1     1    07/14/2011  0.59688      3.81084      0.2646   0.30475    
+IMPRHR2  BOND1     1    07/17/2011  0.76355      13.63935     0.6867   0.41735    
+IMPRHR2  BOND1     1    07/20/2011  0.46118      5.07045      0.4009   0.63696    
+IMPRHR2  BOND1     1    07/23/2011  0.52464      7.05973      0.4486   0.7594     
+IMPRHR2  BOND1     1    07/26/2011  0.84237      4.57863      0.3081   0.53628    
+IMPRHR2  BOND1     1    07/29/2011  0.22162      6.3744       0.384    0.54655    
+IMPRHR2  BOND1     1    08/01/2011  0.83334      12.24052     0.6436   0.53471    
+IMPRHR2  BOND1     1    08/04/2011  0.31128      2.62882      0.4289   0.73528    
+IMPRHR2  BOND1     1    08/07/2011  0.55676      3.26836      0.3023   0.3101     
+IMPRHR2  BOND1     1    08/10/2011  0.13584      0.83176      0.1994   0.95404    
+IMPRHR2  BOND1     1    08/13/2011  0.58643      6.05612      0.4409   0.34875    
+IMPRHR2  BOND1     1    08/16/2011  0.40016      2.68851      0.4193   0.44428    
+IMPRHR2  BOND1     1    08/19/2011  0.83682      7.43226      0.6437   0.51571    
+IMPRHR2  BOND1     1    08/22/2011  0.27258      2.43453      0.3754   0.79264    
+IMPRHR2  BOND1     1    08/25/2011  0.19169      0.7392       0.2637   0.79688    
+IMPRHR2  BOND1     1    08/28/2011  0.20601      0.98831      0.2385   0.33254    
+IMPRHR2  BOND1     1    08/31/2011  0.24794      6.03582      0.4201   0.70143    
+IMPRHR2  BOND1     1    09/03/2011  0.40609      6.52385      0.5232   0.60091    
+IMPRHR2  BOND1     1    09/06/2011  0.20343      1.34772      0.1387   0.18743    
+IMPRHR2  BOND1     1    09/09/2011  0.76807      2.96117      0.1955   0.06197    
+IMPRHR2  BOND1     1    09/12/2011  0.66216      6.05166      0.3514   0.20423    
+IMPRHR2  BOND1     1    09/15/2011  0.14177      0.79464      0.1504   0.19375    
+IMPRHR2  BOND1     1    09/18/2011  0.74846      4.51935      0.5836   0.29357    
+IMPRHR2  BOND1     1    09/21/2011  0.66925      2.19029      0.3021   0.31024    
+IMPRHR2  BOND1     1    09/24/2011  1.26975      2.52978      0.3592   0.26897    
+IMPRHR2  BOND1     1    09/27/2011  0.68254      3.01533      0.1583   0.11068    
+IMPRHR2  BOND1     1    09/30/2011  0.08243      0.3512       0.0744   0.32647    
+IMPRHR2  BOND1     1    10/03/2011  0.5863       1.35296      0.6172   1.75075    
+IMPRHR2  BOND1     1    10/06/2011  1.33992      5.441        0.6968   0.88639    
+IMPRHR2  BOND1     1    10/09/2011  0.98362      4.47348      0.7445   0.89034    
+IMPRHR2  BOND1     1    10/12/2011  1.32947      3.71275      0.5109   0.4448     
+IMPRHR2  BOND1     1    10/15/2011  0.26497      1.25239      0.1626   0.33587    
+IMPRHR2  BOND1     1    10/18/2011  -999         0.97292      0.3738   0.37097    
+IMPRHR2  BOND1     1    10/21/2011  0.76162      0.7406       0.2911   0.42893    
+IMPRHR2  BOND1     1    10/24/2011  1.09908      1.80019      0.5413   0.35441    
+IMPRHR2  BOND1     1    10/27/2011  1.7148       1.68255      0.3622   0.21839    
+IMPRHR2  BOND1     1    10/30/2011  0.97924      1.24348      0.3616   0.3673     
+IMPRHR2  BOND1     1    11/02/2011  0.85824      3.20166      0.528    0.52464    
+IMPRHR2  BOND1     1    11/05/2011  1.39681      2.25737      0.3298   0.17996    
+IMPRHR2  BOND1     1    11/08/2011  -999         1.72173      0.4246   0.20895    
+IMPRHR2  BOND1     1    11/11/2011  1.13352      1.51425      0.2272   0.24271    
+IMPRHR2  BOND1     1    11/14/2011  1.4457       2.32489      0.2492   0.56931    
+IMPRHR2  BOND1     1    11/17/2011  1.00994      0.46105      0.2362   0.37381    
+IMPRHR2  BOND1     1    11/20/2011  3.80253      2.90891      0.367    0.25651    
+IMPRHR2  BOND1     1    11/23/2011  12.41806     5.99948      0.3949   0.2275     
+IMPRHR2  BOND1     1    11/26/2011  0.54644      1.72809      0.197    0.19896    
+IMPRHR2  BOND1     1    11/29/2011  -999         1.62084      0.0945   0.10581    
+IMPRHR2  BOND1     1    12/02/2011  7.9584       3.15571      0.4935   0.21997    
+IMPRHR2  BOND1     1    12/05/2011  4.13368      2.86003      0.2685   0.08228    
+IMPRHR2  BOND1     1    12/08/2011  3.81221      1.26798      0.4228   0.21596    
+IMPRHR2  BOND1     1    12/11/2011  3.72926      2.45751      0.3178   0.2087     
+IMPRHR2  BOND1     1    12/14/2011  2.53382      3.03918      0.3044   0.16882    
+IMPRHR2  BOND1     1    12/17/2011  6.16181      3.33217      0.394    0.18364    
+IMPRHR2  BOND1     1    12/20/2011  -999         2.04839      0.349    0.12897    
+IMPRHR2  BOND1     1    12/23/2011  2.09793      1.91639      0.1836   0.0837     
+IMPRHR2  BOND1     1    12/26/2011  1.4003       0.95238      0.2447   0.13655    
+IMPRHR2  BOND1     1    12/29/2011  1.28213      0.79555      0.2634   0.22676    
+IMPRHR2  BOND1     1    01/01/2012  0.99111      1.55818      0.1137   0.10518    
+IMPRHR2  BOND1     1    01/04/2012  1.77349      0.60844      0.2675   0.33889    
+IMPRHR2  BOND1     1    01/07/2012  -999         -999         -999     -999       
+IMPRHR2  BOND1     1    01/10/2012  4.2739       0.99524      0.6325   0.31089    
+IMPRHR2  BOND1     1    01/13/2012  1.52801      2.44984      0.0984   0.29291    
+IMPRHR2  BOND1     1    01/16/2012  1.23298      2.94785      0.4405   0.22819    
+IMPRHR2  BOND1     1    01/19/2012  2.4946       1.47366      0.1985   0.21446    
+IMPRHR2  BOND1     1    01/22/2012  1.6432       4.75014      0.2233   0.25031    
+IMPRHR2  BOND1     1    01/25/2012  5.75585      3.09804      0.4032   0.18065    
+IMPRHR2  BOND1     1    01/28/2012  1.18848      0.6322       0.0814   0.0697     
+IMPRHR2  BOND1     1    01/31/2012  0.57237      2.03358      0.4744   0.24504    
+IMPRHR2  BOND1     1    02/03/2012  9.59541      3.0704       0.6078   0.25511    
+IMPRHR2  BOND1     1    02/06/2012  2.43823      3.35041      0.1838   0.0591     
+IMPRHR2  BOND1     1    02/09/2012  3.56324      2.61533      0.1574   0.0743     
+IMPRHR2  BOND1     1    02/12/2012  0.80173      0.76411      0.1081   0.26419    
+IMPRHR2  BOND1     1    02/15/2012  6.14208      3.26048      0.5204   0.15126    
+IMPRHR2  BOND1     1    02/18/2012  4.0288       2.17969      0.2178   0.11345    
+IMPRHR2  BOND1     1    02/21/2012  1.59251      1.94168      0.27473  0.18008    
+IMPRHR2  BOND1     1    02/24/2012  2.24795      2.5957       0.1249   0.06941    
+IMPRHR2  BOND1     1    02/27/2012  1.90662      1.7266       0.2216   0.28609    
+IMPRHR2  BOND1     1    03/01/2012  2.40443      2.98415      0.1734   0.12871    
+IMPRHR2  BOND1     1    03/04/2012  1.55355      2.05631      0.1242   0.09548    
+IMPRHR2  BOND1     1    03/07/2012  0.44144      1.99638      0.5262   0.47469    
+IMPRHR2  BOND1     1    03/10/2012  1.64952      1.4308       0.3595   0.30177    
+IMPRHR2  BOND1     1    03/13/2012  1.45241      2.59083      0.4043   0.70258    
+IMPRHR2  BOND1     1    03/16/2012  0.95215      1.95447      0.2558   0.2489     
+IMPRHR2  BOND1     1    03/19/2012  0.66577      2.80603      0.1955   0.32081    
+IMPRHR2  BOND1     1    03/22/2012  0.87797      2.86444      0.4693   0.40177    
+IMPRHR2  BOND1     1    03/25/2012  5.08157      6.21052      0.4422   0.26115    
+IMPRHR2  BOND1     1    03/28/2012  0.50955      2.50326      0.3465   1.02641    
+IMPRHR2  BOND1     1    03/31/2012  4.40509      4.23361      0.4736   0.18783    
+IMPRHR2  BOND1     1    04/03/2012  2.17971      5.31073      0.4313   0.84948    
+IMPRHR2  BOND1     1    04/06/2012  1.77065      1.03492      0.2239   0.46605    
+IMPRHR2  BOND1     1    04/09/2012  0.32792      1.56601      0.1424   0.97073    
+IMPRHR2  BOND1     1    04/12/2012  1.33438      1.36661      0.2977   0.78018    
+IMPRHR2  BOND1     1    04/15/2012  0.64616      4.18646      0.3471   0.80372    
+IMPRHR2  BOND1     1    04/18/2012  1.40133      2.41709      0.322    0.23696    
+IMPRHR2  BOND1     1    04/21/2012  1.56542      2.52619      0.1627   0.35723    
+IMPRHR2  BOND1     1    04/24/2012  0.74369      1.73543      0.2659   0.40018    
+IMPRHR2  BOND1     1    04/27/2012  0.41641      1.46169      0.1372   0.45494    
+IMPRHR2  BOND1     1    04/30/2012  1.8963       2.82076      0.3092   0.47059    
+IMPRHR2  BOND1     1    05/03/2012  0.35436      1.86549      0.1517   0.21524    
+IMPRHR2  BOND1     1    05/06/2012  1.77001      8.37387      0.3573   0.43497    
+IMPRHR2  BOND1     1    05/09/2012  0.37784      1.35482      0.1448   0.3754     
+IMPRHR2  BOND1     1    05/12/2012  0.7482       3.49136      0.4779   0.9592     
+IMPRHR2  BOND1     1    05/15/2012  0.383        1.88244      0.3355   0.91174    
+IMPRHR2  BOND1     1    05/18/2012  0.47395      3.29876      0.4536   0.87077    
+IMPRHR2  BOND1     1    05/21/2012  0.81076      1.94143      0.1642   0.229      
+IMPRHR2  BOND1     1    05/24/2012  0.633        6.59047      0.4492   0.90137    
+IMPRHR2  BOND1     1    05/27/2012  0.3732       4.22767      0.3661   0.90337    
+IMPRHR2  BOND1     1    05/30/2012  0.15648      1.04239      0.1906   0.50994    
+IMPRHR2  BOND1     1    06/02/2012  0.84056      1.72012      0.2303   0.30851    
+IMPRHR2  BOND1     1    06/05/2012  0.53819      1.64311      0.2501   0.31332    
+IMPRHR2  BOND1     1    06/08/2012  0.41951      3.2887       0.3164   0.37143    
+IMPRHR2  BOND1     1    06/11/2012  0.40054      2.55305      0.2784   0.31367    
+IMPRHR2  BOND1     1    06/14/2012  0.28199      2.9509       0.3739   0.48897    
+IMPRHR2  BOND1     1    06/17/2012  0.23633      2.09034      0.1339   0.31939    
+IMPRHR2  BOND1     1    06/20/2012  0.28315      2.69961      0.2986   0.33284    
+IMPRHR2  BOND1     1    06/23/2012  0.41809      1.96012      0.3539   0.40312    
+IMPRHR2  BOND1     1    06/26/2012  0.11765      0.77418      0.2096   0.27637    
+IMPRHR2  BOND1     1    06/29/2012  0.75194      7.93869      0.6765   1.47816    
+IMPRHR2  BOND1     1    07/02/2012  1.09353      5.89636      0.5716   0.61126    
+IMPRHR2  BOND1     1    07/05/2012  0.68357      3.1138       0.1529   7.14308    
+IMPRHR2  BOND1     1    07/08/2012  0.41538      2.23761      0.3137   0.51847    
+IMPRHR2  BOND1     1    07/11/2012  0.20176      4.04568      0.4026   0.61719    
+IMPRHR2  BOND1     1    07/14/2012  0.37178      3.98384      0.2492   0.88214    
+IMPRHR2  BOND1     1    07/17/2012  0.20833      3.48278      0.26     0.47622    
+IMPRHR2  BOND1     1    07/20/2012  0.7295       4.71434      0.3801   0.75757    
+IMPRHR2  BOND1     1    07/23/2012  0.19247      7.21099      0.3414   0.752      
+IMPRHR2  BOND1     1    07/26/2012  -999         -999         -999     -999       
+IMPRHR2  BOND1     1    07/29/2012  0.2313       2.62028      0.2909   0.2655     
+IMPRHR2  BOND1     1    08/01/2012  0.39177      1.9272       0.4773   0.96007    
+IMPRHR2  BOND1     1    08/04/2012  0.81167      5.14845      0.3055   2.56839    
+IMPRHR2  BOND1     1    08/07/2012  0.80638      2.71887      0.29     1.4509     
+IMPRHR2  BOND1     1    08/10/2012  0.9924       1.88451      0.1708   0.52168    
+IMPRHR2  BOND1     1    08/13/2012  0.89913      3.1586       0.3764   0.27076    
+IMPRHR2  BOND1     1    08/16/2012  0.48246      2.7138       0.4831   0.37481    
+IMPRHR2  BOND1     1    08/19/2012  0.40996      1.1644       0.4185   0.45823    
+IMPRHR2  BOND1     1    08/22/2012  0.34366      3.06005      0.3445   0.35393    
+IMPRHR2  BOND1     1    08/25/2012  0.45447      5.85523      0.5268   0.93305    
+IMPRHR2  BOND1     1    08/28/2012  0.42634      1.44816      0.4152   0.31711    
+IMPRHR2  BOND1     1    08/31/2012  0.56579      3.72228      0.4339   0.70741    
+IMPRHR2  BOND1     1    09/03/2012  0.25929      3.07292      0.2178   0.39002    
+IMPRHR2  BOND1     1    09/06/2012  0.52709      2.25609      0.4371   0.52734    
+IMPRHR2  BOND1     1    09/09/2012  0.24188      1.16964      0.1651   0.67197    
+IMPRHR2  BOND1     1    09/12/2012  0.62346      4.2103       0.4841   0.48433    
+IMPRHR2  BOND1     1    09/15/2012  0.91384      1.27384      0.5155   0.77527    
+IMPRHR2  BOND1     1    09/18/2012  0.2064       0.65711      0.1091   0.22394    
+IMPRHR2  BOND1     1    09/21/2012  0.41628      1.07741      0.2384   0.92934    
+IMPRHR2  BOND1     1    09/24/2012  0.42093      0.64049      0.2811   0.4085     
+IMPRHR2  BOND1     1    09/27/2012  0.36288      1.53479      0.2694   0.4392     
+IMPRHR2  BOND1     1    09/30/2012  0.72356      1.56333      0.3779   0.72459    
+IMPRHR2  BOND1     1    10/03/2012  2.88238      2.67717      0.3944   0.30239    
+IMPRHR2  BOND1     1    10/06/2012  0.67377      0.85412      0.1169   0.45218    
+IMPRHR2  BOND1     1    10/09/2012  0.66564      1.5208       0.2048   0.30134    
+IMPRHR2  BOND1     1    10/12/2012  0.68899      0.98666      0.2351   0.42349    
+IMPRHR2  BOND1     1    10/15/2012  1.50117      1.88834      0.4216   0.65397    
+IMPRHR2  BOND1     1    10/18/2012  0.13429      0.54545      0.063    0.81323    
+IMPRHR2  BOND1     1    10/21/2012  1.23272      2.70847      0.385    0.40768    
+IMPRHR2  BOND1     1    10/24/2012  0.58592      3.35222      0.3949   0.70377    
+IMPRHR2  BOND1     1    10/27/2012  1.78007      1.21188      0.193    0.10263    
+IMPRHR2  BOND1     1    10/30/2012  0.8585       0.9504       0.1441   0.32908    
+IMPRHR2  BOND1     1    11/02/2012  2.32368      1.09498      0.3415   0.67202    
+IMPRHR2  BOND1     1    11/05/2012  4.26564      1.79503      0.4302   0.23932    
+IMPRHR2  BOND1     1    11/08/2012  7.38086      4.93131      0.3433   0.14735    
+IMPRHR2  BOND1     1    11/11/2012  0.36907      1.81149      0.2686   0.35735    
+IMPRHR2  BOND1     1    11/14/2012  3.93024      1.42997      0.353    0.2239     
+IMPRHR2  BOND1     1    11/17/2012  12.39277     3.37153      0.7916   0.62313    
+IMPRHR2  BOND1     1    11/20/2012  5.70154      3.44157      0.8762   0.68475    
+IMPRHR2  BOND1     1    11/23/2012  1.28794      1.68362      0.0549   0.32493    
+IMPRHR2  BOND1     1    11/26/2012  3.85968      1.91685      0.2166   0.38063    
+IMPRHR2  BOND1     1    11/29/2012  6.2138       2.35909      0.4574   0.43433    
+IMPRHR2  BOND1     1    12/02/2012  1.78755      4.09299      0.5203   0.31497    
+IMPRHR2  BOND1     1    12/05/2012  1.52349      0.59256      0.1992   0.15462    
+IMPRHR2  BOND1     1    12/08/2012  5.98779      3.02453      0.2841   0.08943    
+IMPRHR2  BOND1     1    12/11/2012  2.75131      1.58788      0.126    0.17098    
+IMPRHR2  BOND1     1    12/14/2012  2.37979      1.53545      0.3828   0.31758    
+IMPRHR2  BOND1     1    12/17/2012  8.19318      4.05987      0.2083   0.0735     
+IMPRHR2  BOND1     1    12/20/2012  1.80794      1.98148      0.2064   0.63498    
+IMPRHR2  BOND1     1    12/23/2012  8.02445      1.57249      0.3527   0.21196    
+IMPRHR2  BOND1     1    12/26/2012  1.11379      1.80712      0.0801   0.09351    
+IMPRHR2  BOND1     1    12/29/2012  5.31919      5.40325      0.2551   0.21367    
+IMPRHR2  BOND1     1    01/01/2013  5.2801       2.38004      0.2389   0.13919    
+IMPRHR2  BOND1     1    01/04/2013  5.14013      2.54083      0.2253   0.21152    
+IMPRHR2  BOND1     1    01/07/2013  9.02936      3.45931      0.3453   0.3171     
+IMPRHR2  BOND1     1    01/10/2013  2.64476      1.11994      0.2923   0.15613    
+IMPRHR2  BOND1     1    01/13/2013  1.92907      3.26209      0.0697   0.15894    
+IMPRHR2  BOND1     1    01/16/2013  9.77407      1.31897      0.2995   0.24017    
+IMPRHR2  BOND1     1    01/19/2013  1.61405      1.14225      0.1725   0.16064    
+IMPRHR2  BOND1     1    01/22/2013  1.88727      0.87891      0.0614   0.21612    
+IMPRHR2  BOND1     1    01/25/2013  5.11395      2.03065      0.2253   0.26225    
+IMPRHR2  BOND1     1    01/28/2013  3.48339      3.97609      0.4478   0.12565    
+IMPRHR2  BOND1     1    01/31/2013  1.45693      2.63431      0.0879   0.21115    
+IMPRHR2  BOND1     1    02/03/2013  4.46675      2.15948      0.1475   0.21274    
+IMPRHR2  BOND1     1    02/06/2013  5.6493       3.42536      0.1447   0.0678     
+IMPRHR2  BOND1     1    02/09/2013  2.54285      3.05968      0.1892   0.10268    
+IMPRHR2  BOND1     1    02/12/2013  5.08595      5.04322      0.196    0.10234    
+IMPRHR2  BOND1     1    02/15/2013  2.64476      1.6321       0.0715   0.11818    
+IMPRHR2  BOND1     1    02/18/2013  1.60399      1.89284      0.2522   0.19898    
+IMPRHR2  BOND1     1    02/21/2013  4.06905      2.03631      0.1901   0.13921    
+IMPRHR2  BOND1     1    02/24/2013  8.08456      2.71314      0.286    0.10708    
+IMPRHR2  BOND1     1    02/27/2013  3.09368      3.37668      0.1437   0.06402    
+IMPRHR2  BOND1     1    03/02/2013  2.41591      1.23651      0.1024   0.09266    
+IMPRHR2  BOND1     1    03/05/2013  7.49761      3.50815      0.2449   0.20462    
+IMPRHR2  BOND1     1    03/08/2013  4.65445      3.54123      0.3292   0.20341    
+IMPRHR2  BOND1     1    03/11/2013  2.37541      2.22754      0.0922   0.11148    
+IMPRHR2  BOND1     1    03/14/2013  2.59509      1.52217      0.1856   0.2121     
+IMPRHR2  BOND1     1    03/17/2013  2.82678      2.94038      0.1772   0.13939    
+IMPRHR2  BOND1     1    03/20/2013  1.22795      1.61007      0.077    0.32007    
+IMPRHR2  BOND1     1    03/23/2013  6.52353      2.40776      0.4109   0.2987     
+IMPRHR2  BOND1     1    03/26/2013  3.38625      1.04428      0.1077   0.11182    
+IMPRHR2  BOND1     1    03/29/2013  7.89725      2.27894      0.2998   0.35219    
+IMPRHR2  BOND1     1    04/01/2013  0.93641      1.54308      0.0642   0.25863    
+IMPRHR2  BOND1     1    04/04/2013  3.999        1.93277      0.3581   0.85379    
+IMPRHR2  BOND1     1    04/07/2013  2.16901      2.16913      0.2644   0.6047     
+IMPRHR2  BOND1     1    04/10/2013  3.09394      3.3054       0.2839   0.78383    
+IMPRHR2  BOND1     1    04/13/2013  0.99885      1.37965      0.0839   0.11123    
+IMPRHR2  BOND1     1    04/16/2013  2.34096      0.90148      0.1612   0.3162     
+IMPRHR2  BOND1     1    04/19/2013  0.35927      0.88337      0.023    0.13774    
+IMPRHR2  BOND1     1    04/22/2013  0.6232       3.16895      0.2718   0.49784    
+IMPRHR2  BOND1     1    04/25/2013  0.58398      1.81785      0.1504   0.44991    
+IMPRHR2  BOND1     1    04/28/2013  1.38585      3.15591      0.2521   0.20281    
+IMPRHR2  BOND1     1    05/01/2013  1.32135      4.42967      0.5475   1.36849    
+IMPRHR2  BOND1     1    05/04/2013  0.38545      1.31307      0.1293   0.25465    
+IMPRHR2  BOND1     1    05/07/2013  1.79607      2.87686      0.4832   0.67315    
+IMPRHR2  BOND1     1    05/10/2013  2.63805      2.67531      0.1771   0.20729    
+IMPRHR2  BOND1     1    05/13/2013  0.76342      1.38918      0.1494   0.54631    
+IMPRHR2  BOND1     1    05/16/2013  1.06477      2.35393      0.4207   1.51675    
+IMPRHR2  BOND1     1    05/19/2013  1.70138      7.86646      0.5876   0.56213    
+IMPRHR2  BOND1     1    05/22/2013  0.2669       1.74537      0.1065   0.36839    
+IMPRHR2  BOND1     1    05/25/2013  1.15674      1.43335      0.21     0.34614    
+IMPRHR2  BOND1     1    05/28/2013  0.47472      3.06059      0.2014   0.46084    
+IMPRHR2  BOND1     1    05/31/2013  0.19814      1.30932      0.0401   0.54837    
+IMPRHR2  BOND1     1    06/03/2013  0.30534      0.84237      0.1271   0.12835    
+IMPRHR2  BOND1     1    06/06/2013  -999         -999         -999     -999       
+IMPRHR2  BOND1     1    06/09/2013  1.20731      5.56863      0.3474   0.4557     
+IMPRHR2  BOND1     1    06/12/2013  -999         -999         -999     -999       
+IMPRHR2  BOND1     1    06/15/2013  -999         -999         -999     -999       
+IMPRHR2  BOND1     1    06/18/2013  0.919        2.46774      0.2816   0.57523    
+IMPRHR2  BOND1     1    06/21/2013  0.43538      4.84621      0.5819   0.55131    
+IMPRHR2  BOND1     1    06/24/2013  0.29825      2.85834      0.2241   0.80182    
+IMPRHR2  BOND1     1    06/27/2013  -999         -999         -999     -999       
+IMPRHR2  BOND1     1    06/30/2013  -999         -999         -999     -999       
+IMPRHR2  BOND1     1    07/03/2013  -999         -999         -999     -999       
+IMPRHR2  BOND1     1    07/06/2013  1.12643      5.90106      0.453    0.47808    
+IMPRHR2  BOND1     1    07/09/2013  0.35643      3.89223      0.368    0.80492    
+IMPRHR2  BOND1     1    07/12/2013  0.39719      1.36319      0.301    0.30259    
+IMPRHR2  BOND1     1    07/15/2013  0.29064      3.4841       0.2831   0.58998    
+IMPRHR2  BOND1     1    07/18/2013  0.52232      6.12567      0.3158   0.84992    
+IMPRHR2  BOND1     1    07/21/2013  0.97743      4.02914      0.2629   0.49894    
+IMPRHR2  BOND1     1    07/24/2013  0.15674      0.68195      0.1604   0.39632    
+IMPRHR2  BOND1     1    07/27/2013  0.26922      1.26786      0.1202   0.30433    
+IMPRHR2  BOND1     1    07/30/2013  0.75542      4.11708      0.408    0.29397    
+IMPRHR2  BOND1     1    08/02/2013  0.48143      3.41868      0.4694   0.31809    
+IMPRHR2  BOND1     1    08/05/2013  0.50349      2.77967      0.445    0.21204    
+IMPRHR2  BOND1     1    08/08/2013  1.45964      3.52465      0.3685   0.33515    
+IMPRHR2  BOND1     1    08/11/2013  0.44028      2.298        0.3441   0.35067    
+IMPRHR2  BOND1     1    08/14/2013  0.29257      1.14184      0.2406   0.49996    
+IMPRHR2  BOND1     1    08/17/2013  0.73607      2.9582       0.4638   0.60535    
+IMPRHR2  BOND1     1    08/20/2013  0.89487      8.19275      0.7161   0.42153    
+IMPRHR2  BOND1     1    08/23/2013  1.47524      2.59735      0.4334   0.29604    
+IMPRHR2  BOND1     1    08/26/2013  0.47291      5.6588       0.5226   0.4106     
+IMPRHR2  BOND1     1    08/29/2013  1.3665       6.97509      0.3942   0.70326    
+IMPRHR2  BOND1     1    09/01/2013  1.60502      5.63351      0.3077   0.65214    
+IMPRHR2  BOND1     1    09/04/2013  0.86314      3.28816      0.4121   1.01631    
+IMPRHR2  BOND1     1    09/07/2013  0.78896      6.633        0.5768   0.5227     
+IMPRHR2  BOND1     1    09/10/2013  0.34933      6.32433      0.5248   0.70158    
+IMPRHR2  BOND1     1    09/13/2013  0.23775      0.91344      0.1455   0.26287    
+IMPRHR2  BOND1     1    09/16/2013  2.43862      3.61639      0.2738   0.17618    
+IMPRHR2  BOND1     1    09/19/2013  0.61997      6.69125      0.4862   0.68103    
+IMPRHR2  BOND1     1    09/22/2013  0.54103      1.35337      0.2553   0.12097    
+IMPRHR2  BOND1     1    09/25/2013  0.69608      5.72917      0.6126   0.56122    
+IMPRHR2  BOND1     1    09/28/2013  0.53961      4.02497      0.4467   0.32524    
+IMPRHR2  BOND1     1    10/01/2013  0.67415      4.45739      0.2662   0.09356    
+IMPRHR2  BOND1     1    10/04/2013  0.35204      3.12415      0.3619   0.19823    
+IMPRHR2  BOND1     1    10/07/2013  0.36056      1.33617      0.1289   0.15175    
+IMPRHR2  BOND1     1    10/10/2013  0.98646      4.43842      0.5709   0.66595    
+IMPRHR2  BOND1     1    10/13/2013  0.25387      0.83643      0.2333   1.08778    
+IMPRHR2  BOND1     1    10/16/2013  0.1735       0.4971       0.1245   0.06507    
+IMPRHR2  BOND1     1    10/19/2013  0.71763      1.30824      0.1103   0.2123     
+IMPRHR2  BOND1     1    10/22/2013  0.97408      1.01364      0.1922   0.26604    
+IMPRHR2  BOND1     1    10/25/2013  1.33902      1.21819      0.1167   0.2194     
+IMPRHR2  BOND1     1    10/28/2013  2.18694      1.32252      0.6616   0.66528    
+IMPRHR2  BOND1     1    10/31/2013  0.3821       1.64472      0.1536   0.14205    
+IMPRHR2  BOND1     1    11/03/2013  1.81877      1.52365      0.3577   0.11075    
+IMPRHR2  BOND1     1    11/06/2013  0.42454      0.97742      0.1846   0.0976     
+IMPRHR2  BOND1     1    11/09/2013  0.49381      0.77567      0.2214   0.20403    
+IMPRHR2  BOND1     1    11/12/2013  0.82676      0.55044      0.0959   0.06004    
+IMPRHR2  BOND1     1    11/15/2013  2.23273      1.29067      0.6564   0.43731    
+IMPRHR2  BOND1     1    11/18/2013  1.59341      1.55756      0.162    0.18704    
+IMPRHR2  BOND1     1    11/21/2013  2.62051      2.03919      0.691    0.26345    
+IMPRHR2  BOND1     1    11/24/2013  0.66022      0.55056      0.09     0.08639    
+IMPRHR2  BOND1     1    11/27/2013  0.58669      0.83643      0.118    0.31473    
+IMPRHR2  BOND1     1    11/30/2013  4.60517      2.24734      0.6872   0.32115    
+IMPRHR2  BOND1     1    12/03/2013  7.67369      6.11775      0.989    0.17003    
+IMPRHR2  BOND1     1    12/06/2013  2.31116      1.29694      0.1409   0.25874    
+IMPRHR2  BOND1     1    12/09/2013  6.79495      2.83272      0.2839   0.19153    
+IMPRHR2  BOND1     1    12/12/2013  2.60515      1.33873      0.1815   0.23244    
+IMPRHR2  BOND1     1    12/15/2013  7.96652      3.19877      0.2713   0.1464     
+IMPRHR2  BOND1     1    12/18/2013  1.66229      0.5709       0.1961   0.1882     
+IMPRHR2  BOND1     1    12/21/2013  2.93862      1.70305      0.1534   0.05991    
+IMPRHR2  BOND1     1    12/24/2013  1.54336      1.43327      0.1193   0.24648    
+IMPRHR2  BOND1     1    12/27/2013  3.64631      1.52534      0.2775   0.19625    
+IMPRHR2  BOND1     1    12/30/2013  2.75105      2.36367      0.1207   0.15887    
+IMPRHR2  BOND1     1    01/02/2014  2.34651      1.26122      0.2177   0.22159    
+IMPRHR2  BOND1     1    01/05/2014  2.49151      1.45027      0.23691  0.25069    
+IMPRHR2  BOND1     1    01/08/2014  -999         -999         -999     -999       
+IMPRHR2  BOND1     1    01/11/2014  -999         -999         0.0486   -999       
+IMPRHR2  BOND1     1    01/14/2014  -999         2.2506       0.0547   0.11664    
+IMPRHR2  BOND1     1    01/17/2014  1.08953      1.73828      0.0847   0.64911    
+IMPRHR2  BOND1     1    01/20/2014  3.37064      2.09517      0.2207   0.22077    
+IMPRHR2  BOND1     1    01/23/2014  1.17558      0.72212      0.0652   0.43913    
+IMPRHR2  BOND1     1    01/26/2014  0.51768      0.66646      0.0483   0.24015    
+IMPRHR2  BOND1     1    01/29/2014  1.78601      0.73495      0.1724   0.42353    
+IMPRHR2  BOND1     1    02/01/2014  9.50356      2.7286       0.23691  0.23501    
+IMPRHR2  BOND1     1    02/04/2014  10.23615     2.86741      0.23691  0.28158    
+IMPRHR2  BOND1     1    02/07/2014  4.99153      1.38212      0.1991   0.137      
+IMPRHR2  BOND1     1    02/10/2014  5.05474      1.37977      0.1537   0.18408    
+IMPRHR2  BOND1     1    02/13/2014  14.92491     5.04162      0.5784   0.3905     
+IMPRHR2  BOND1     1    02/16/2014  11.25177     4.00909      0.3372   0.21084    
+IMPRHR2  BOND1     1    02/19/2014  7.18246      1.30276      0.1857   0.23181    
+IMPRHR2  BOND1     1    02/22/2014  2.31026      0.80425      0.1085   0.1785     
+IMPRHR2  BOND1     1    02/25/2014  1.84251      1.16989      0.0593   0.13081    
+IMPRHR2  BOND1     1    02/28/2014  3.72371      2.38726      0.1941   0.45064    
+IMPRHR2  BOND1     1    03/03/2014  1.80561      1.35308      0.1587   0.27336    
+IMPRHR2  BOND1     1    03/06/2014  11.99752     3.66564      0.366    0.25388    
+IMPRHR2  BOND1     1    03/09/2014  9.19589      5.36205      0.3434   0.12       
+IMPRHR2  BOND1     1    03/12/2014  1.24743      2.37311      0.0934   0.1113     
+IMPRHR2  BOND1     1    03/15/2014  1.53626      0.90618      0.0989   0.11419    
+IMPRHR2  BOND1     1    03/18/2014  5.46792      4.42786      0.4379   0.19303    
+IMPRHR2  BOND1     1    03/21/2014  3.10168      2.0479       0.1533   1.01627    
+IMPRHR2  BOND1     1    03/24/2014  2.24821      1.80258      0.3549   0.22557    
+IMPRHR2  BOND1     1    03/27/2014  3.00415      2.73463      0.464    0.47946    
+IMPRHR2  BOND1     1    03/30/2014  4.50042      2.78404      0.3224   0.16808    
+IMPRHR2  BOND1     1    04/02/2014  3.77596      1.89795      0.2177   0.47281    
+IMPRHR2  BOND1     1    04/05/2014  1.00917      2.87677      0.1401   0.25005    
+IMPRHR2  BOND1     1    04/08/2014  4.41167      2.27428      0.3383   0.23586    
+IMPRHR2  BOND1     1    04/11/2014  1.09508      0.82603      0.3155   0.51088    
+IMPRHR2  BOND1     1    04/14/2014  0.45898      0.63843      0.039    0.0611     
+IMPRHR2  BOND1     1    04/17/2014  2.32548      2.30179      0.4235   0.68572    
+IMPRHR2  BOND1     1    04/20/2014  2.06581      4.8543       0.8335   0.64977    
+IMPRHR2  BOND1     1    04/23/2014  0.99459      0.92454      0.1759   0.64332    
+IMPRHR2  BOND1     1    04/26/2014  1.10321      1.26242      0.2567   0.44443    
+IMPRHR2  BOND1     1    04/29/2014  0.32405      0.67452      0.0426   1.00062    
+IMPRHR2  BOND1     1    05/02/2014  1.13907      1.02667      0.0938   0.12682    
+IMPRHR2  BOND1     1    05/05/2014  0.45163      1.78472      0.2516   0.82126    
+IMPRHR2  BOND1     1    05/08/2014  0.52426      3.29847      0.2433   1.25292    
+IMPRHR2  BOND1     1    05/11/2014  0.41706      2.67844      0.1436   1.01866    
+IMPRHR2  BOND1     1    05/14/2014  1.40468      0.91377      0.1674   0.1804     
+IMPRHR2  BOND1     1    05/17/2014  2.08606      2.08907      0.1502   0.20983    
+IMPRHR2  BOND1     1    05/20/2014  0.63855      4.26216      0.2835   0.78029    
+IMPRHR2  BOND1     1    05/23/2014  0.87514      1.38237      0.4186   0.29248    
+IMPRHR2  BOND1     1    05/26/2014  0.99046      4.75431      0.2528   0.62411    
+IMPRHR2  BOND1     1    05/29/2014  3.80821      5.85915      0.3866   0.74201    
+IMPRHR2  BOND1     1    06/01/2014  0.47343      3.53096      0.2712   0.5306     
+IMPRHR2  BOND1     1    06/04/2014  0.34985      1.28374      0.1486   0.4671     
+IMPRHR2  BOND1     1    06/07/2014  1.67068      5.41427      0.3647   0.49828    
+IMPRHR2  BOND1     1    06/10/2014  1.46892      4.70993      0.485    0.22529    
+IMPRHR2  BOND1     1    06/13/2014  0.14577      0.59507      0.1033   0.60099    
+IMPRHR2  BOND1     1    06/16/2014  0.56296      3.71555      0.3271   1.48223    
+IMPRHR2  BOND1     1    06/19/2014  0.75491      4.01833      0.2186   2.11179    
+IMPRHR2  BOND1     1    06/22/2014  0.66241      1.58866      0.1504   0.63962    
+IMPRHR2  BOND1     1    06/25/2014  0.3047       2.98728      0.2011   0.3633     
+IMPRHR2  BOND1     1    06/28/2014  0.53032      3.97827      0.2074   1.06285    
+IMPRHR2  BOND1     1    07/01/2014  0.14577      0.83803      0.0885   0.95714    
+IMPRHR2  BOND1     1    07/04/2014  0.33966      1.06998      0.245    0.16886    
+IMPRHR2  BOND1     1    07/07/2014  0.34791      5.23991      0.3086   1.58667    
+IMPRHR2  BOND1     1    07/10/2014  0.33398      0.93922      0.2897   0.23677    
+IMPRHR2  BOND1     1    07/13/2014  0.20537      1.48273      0.1078   2.12383    
+IMPRHR2  BOND1     1    07/16/2014  0.21762      0.64267      0.1903   0.7742     
+IMPRHR2  BOND1     1    07/19/2014  0.84934      5.8316       0.5359   0.3399     
+IMPRHR2  BOND1     1    07/22/2014  0.70344      8.89069      0.7815   0.44049    
+IMPRHR2  BOND1     1    07/25/2014  0.49678      3.17914      0.1587   0.25742    
+IMPRHR2  BOND1     1    07/28/2014  0.19415      0.93617      0.5484   0.58179    
+IMPRHR2  BOND1     1    07/31/2014  0.38042      1.76261      0.4532   1.22421    
+IMPRHR2  BOND1     1    08/03/2014  0.89345      4.34164      0.4635   1.83078    
+IMPRHR2  BOND1     1    08/06/2014  2.06078      7.01617      0.5826   0.44402    
+IMPRHR2  BOND1     1    08/09/2014  0.48298      4.7428       0.7952   0.47742    
+IMPRHR2  BOND1     1    08/12/2014  0.08824      0.74448      0.129    0.50773    
+IMPRHR2  BOND1     1    08/15/2014  0.22859      1.77239      0.3197   0.17069    
+IMPRHR2  BOND1     1    08/18/2014  1.47318      7.16005      0.4552   0.23461    
+IMPRHR2  BOND1     1    08/21/2014  0.53277      3.09573      0.1075   7.88119    
+IMPRHR2  BOND1     1    08/24/2014  0.73195      4.06313      0.2167   2.80603    
+IMPRHR2  BOND1     1    08/27/2014  0.74523      3.73048      0.3094   1.09447    
+IMPRHR2  BOND1     1    08/30/2014  0.44815      3.35969      0.2201   0.25262    
