@@ -299,9 +299,6 @@ bondbars <- ggplot(bond.composition, aes(x=Season, y=value, fill=species))+
 g <- bondbars + geom_text(data=subset(bond.composition, bond.composition$Clouds=="0"),aes(x=Season-0.2,y=total+0.4,label=round(total, digits=1), fontface=fontface),colour="orange2", size=6)+
   geom_text(data=subset(bond.composition, bond.composition$Clouds=="1"),aes(x=Season+0.2,y=total+0.4,label=round(total, digits=1), fontface=fontface), colour="blue", size=6)+
   geom_text(aes(x=0.6,y=16, label="Clear Median"), colour="orange2", hjust=0, size=5.5)+geom_text(aes(x=0.6,y=15.2, label="Cloudy Median"), colour="blue", hjust=0, size=5.5)
-mypath <- file.path("E:","Work_Computer","FleschROutputs","Bondville","2021_new","plots",
-                    paste("bond_pm25comp_aerocld_bars.png"))
-png(file=mypath, width=7, height=5, units="in", res=400)
 print(g)
 dev.off()
 
