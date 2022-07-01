@@ -9,14 +9,14 @@ Relevant Links:
 - AERONET data is publicly available at https://aeronet.gsfc.nasa.gov/cgi-bin/webtool_aod_v3
 - AERONET quality assurance algorithm metadata used for cloudiness determination method can be made available upon request via AERONET.
 
-###R code for relevant calculations and figure plotting
-#Relevant packages
+### R code for relevant calculations and figure plotting
+# Relevant packages
 library(ggplot2)
 library(lubridate)
 library(zoo)
 library(stringr)
 library(dplyr)
-library(vioplot) #if on a Mac, you will need to install XQuartz to properly run this package
+library(vioplot)
 library(ncdf4)
 library(chron)
 library(tidyr)
@@ -24,22 +24,31 @@ library(colorRamps)
 library(ggpubr)
 library(patchwork)
 library(ggrepel)
+library(readxl)
 
-##Calculation of organic ALW
-#first calculate OM:OC ratios using the IMPROVE formula
+## Calculation of daily average surface temperature and relative humidity (RH)
+bond_all.ecmwf.dew$t_celsius <- bond_all.ecmwf.dew$sfc_air_temp-273.15
+bond_all.ecmwf.dew$td_celsius <- bond_all.ecmwf.dew$sfc_tdew-273.15
+
+bond_all.ecmwf.dew$es_td <- (exp(34.494-(4924.99/(bond_all.ecmwf.dew$td_celsius+237.1))))/((bond_all.ecmwf.dew$td_celsius+105)^1.57)
+bond_all.ecmwf.dew$es_t <- (exp(34.494-(4924.99/(bond_all.ecmwf.dew$t_celsius+237.1))))/((bond_all.ecmwf.dew$t_celsius+105)^1.57)
+
+bond_all.ecmwf.dew$RH <- 100*(bond_all.ecmwf.dew$es_td/bond_all.ecmwf.dew$es_t)
+bond_all.ecmwf.dew$rh <- bond_all.ecmwf.dew$RH/100
+
+
+## Calculation of organic ALW
+# first calculate OM:OC ratios using the IMPROVE formula
+#dataset downloaded from IMPROVE public archives
 bond.om$Date <- as.Date(bond.om$Date,format="%m/%d/%Y")
-bond.om$month <- as.numeric(substring(bond.om$Date,6,7))
-bond.om$year <- as.numeric(substring(bond.om$Date,1,4))
-bond.om$day <- as.numeric(substring(bond.om$Date,9,10))
+bond.om$Dataset <- NULL
+bond.om$POC <- NULL
 
-#dropping IMPROVE measurement days that are not in the AERONET record to match
-bond.om$year <- ifelse(bond.om$year==2011,
-                       ifelse(bond.om$month>=5 & bond.om$month<=8,NA,bond.om$year),bond.om$year)
-bond.om$year <- ifelse(bond.om$year==2012,
-                       ifelse(bond.om$month>=8 & bond.om$month<=11,NA,bond.om$year),bond.om$year)
-bond.om <- drop_na(bond.om,year)
+bond.om$Month <- as.numeric(substring(bond.om$Date,6,7))
+bond.om$Year <- as.numeric(substring(bond.om$Date,1,4))
+bond.om$Day <- as.numeric(substring(bond.om$Date,9,10))
 
-#make missing Values NA
+# make missing values 0
 bond.om$ALf.Val <- ifelse(bond.om$ALf.Val<0, 0, bond.om$ALf.Val)
 bond.om$ammNO3f.Val <- ifelse(bond.om$ammNO3f.Val<0, 0, bond.om$ammNO3f.Val)
 bond.om$ammSO4f.Val <- ifelse(bond.om$ammSO4f.Val<0, 0, bond.om$ammSO4f.Val)
@@ -57,46 +66,65 @@ bond.om$MF.Val <- ifelse(bond.om$MF.Val<0, 0, bond.om$MF.Val)  ##MF==PM2.5
 bond.om$SIf.Val <- ifelse(bond.om$SIf.Val<0, 0, bond.om$SIf.Val)
 bond.om$TIf.Val <- ifelse(bond.om$TIf.Val<0, 0, bond.om$TIf.Val)
 
-#find soil Values
-#SOIL==(2.2xAl + 2.49xSi + 1.63xCa + 2.42xFe +1.94xTi)
+# find soil Vals
+# SOIL==(2.2xAl + 2.49xSi + 1.63xCa + 2.42xFe +1.94xTi)
 bond.om$soil <- (2.2 * bond.om$ALf.Val) + (2.49 * bond.om$SIf.Val) + (1.63 * bond.om$CAf.Val) +
   (2.42 * bond.om$FEf.Val) + (1.94 * bond.om$TIf.Val)
 
-#calculate OM:OC
+# calculate OM:OC
 bond.om$omoc <- (bond.om$MF.Val - bond.om$ammSO4f.Val - bond.om$ammNO3f.Val - bond.om$ECf.Val - bond.om$soil -
                    (1.8 * bond.om$CHLf.Val))/bond.om$OCf.Val
 
-#remove NAs --> lots of missing data in Cl
+# remove NAs 
 bond.om$ammNO3f.Val <- ifelse(bond.om$ammNO3f.Val<=0,NA,bond.om$ammNO3f.Val)
 bond.om <- na.omit(bond.om)
 
-#allocate seasons
-bond.om$year2 <- ifelse(bond.om$month=="12", bond.om$year+1, bond.om$year)
+# allocate seasons
+bond.om$Year2 <- ifelse(bond.om$Month=="12", bond.om$Year+1, bond.om$Year)
 bond.om$yearqtr <- as.yearqtr(as.yearmon(bond.om$Date, "%Y-%m-%d")+1/12)
-bond.om$season <- factor(format(bond.om$yearqtr, "%q"), levels=1:4, labels=c("1", "2", "3", "4"))
+bond.om$Season <- factor(format(bond.om$yearqtr, "%q"), levels=1:4, labels=c("1", "2", "3", "4"))
 #note: 1 == winter, 2 == spring,3 == summer, 4 == fall
+#drop any 2020 dates
+bond.om$Year <- ifelse(bond.om$Year == 2020, NA, bond.om$Year)
+bond.om <- drop_na(bond.om,Year)
+bond.om$Year3 <-as.factor(bond.om$Year2)
 
-#find medians for each season
-bond.omoc.ratios <- tapply(bond.om$omoc, INDEX = bond.om$season, FUN="median")
+# find medians for each season
+bond.omoc.ratios <- tapply(bond.om$omoc, INDEX =list(bond.om$Season, bond.om$Year3), FUN="median")
 bond.final.ratios <- data.frame(bond.omoc.ratios)
 bond.final.ratios <- tibble::rownames_to_column(bond.final.ratios, "season")
-names(bond.final.ratios) <- c("Season","ratio")
+colnames(bond.final.ratios) <- c("Season","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020")
 
-bondvillelvl1 <- merge(bondvillelvl1, bond.final.ratios, by=c("Season"), all=T) #adds appropriate seasonal OM:OC ratio through whole dataset
-
-#calculate organic water
-bondvillelvl1$OM <- (bondvillelvl1$OCtot * bondvillelvl1$ratio)
-bondvillelvl1$OM_gcm3 <- bondvillelvl1$OM*(1/10^6)*(1/10^6)
-bondvillelvl1$Vo <- bondvillelvl1$OM_gcm3/1.4
-bondvillelvl1$aw_1aw <- (bondvillelvl1$RH_ecmwf/(1-bondvillelvl1$RH_ecmwf))
-bondvillelvl1$Vwo <- (bondvillelvl1$Vo)*(0.3)*(bondvillelvl1$aw_1aw) #using a korg value of 0.3 for rural aerosol
-bondvillelvl1$Vwo_ugm3 <- (bondvillelvl1$Vwo*(10^6)*(10^6)) #final value of organic ALW
+bond.final.ratios <- pivot_longer(bond.final.ratios,cols=c("2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"), values_to="ratio", names_to="Year2")
 
 
+# calculate organic water
+# first allocating seasons
+bond_all.ecmwf$Year <- as.numeric(substring(bond_all.ecmwf$Date,1,4))
+bond_all.ecmwf$Month <- as.numeric(substring(bond_all.ecmwf$Date,6,7))
+bond_all.ecmwf$Year2 <- ifelse(bond_all.ecmwf$Month == 12, bond_all.ecmwf$Year+1, bond_all.ecmwf$Year)
+bond_all.ecmwf$yrqtr <- as.yearqtr(as.yearmon(bond_all.ecmwf$Date, "%Y-%m-%d")+1/12)
+bond_all.ecmwf$Season <- factor(format(bond_all.ecmwf$yrqtr, "%q"), levels=1:4, labels=c("1", "2", "3", "4"))
+bond_all.ecmwf$Season <- as.numeric(bond_all.ecmwf$Season)
 
-##Cloudiness Determination using the AERONET metadata
+# merging meteorology with OM:OC ratios
+bond_all.ecmwf <- merge(bond_all.ecmwf, bond.final.ratios, by=c("Season","Year2"), all=T)
+
+# calculate organic water
+bond_all.ecmwf$OM <- (bond_all.ecmwf$OCtot * bond_all.ecmwf$ratio)
+bond_all.ecmwf$OM_gcm3 <- bond_all.ecmwf$OM*(1/10^6)*(1/10^6)
+bond_all.ecmwf$Vo <- bond_all.ecmwf$OM_gcm3/1.4
+bond_all.ecmwf$aw_1aw <- (bond_all.ecmwf$RH_ecmwf/(1-bond_all.ecmwf$RH_ecmwf))
+bond_all.ecmwf$Vwo <- (bond_all.ecmwf$Vo)*(0.3)*(bond_all.ecmwf$aw_1aw) # using a korg value of 0.3 for rural aerosol
+bond_all.ecmwf$Vwo_ugm3 <- (bond_all.ecmwf$Vwo*(10^6)*(10^6)) # final value of organic ALW
+
+
+
+
+## Cloudiness Determination using the AERONET metadata
 bondallaerodates <- data.frame(date=bondvilleall.lvl1$Date,Quality_Level=bondvilleall.lvl1$Data_Quality_Level.x) 
 # Quality Level = scale of 1-4
+# no "3" points in dataset 
 
 bondallaero.cloud1 <- bondallaerodates %>% group_by(date) %>% filter(Quality_Level==1) %>% count(name="Count_1", .drop=TRUE)
 bondallaero.cloud2 <- bondallaerodates %>% group_by(date) %>% filter(Quality_Level==2) %>% count(name="Count_2", .drop=TRUE)
@@ -115,7 +143,7 @@ bond.allclouds$Cloudy_Math <- (bond.allclouds$Count_1+bond.allclouds$Count_2)/(b
 bond.allclouds$Clouds <- ifelse(bond.allclouds$Cloudy_Math>=0.5,1,0)
 bond.allclouds$total_points <- bond.allclouds$Count_1+bond.allclouds$Count_2+bond.allclouds$Count_4
 
-#fixing column names & merging with main data set
+# fixing column names & merging with main data set
 colnames(bond.allclouds)<-c("Date","Count_1","Count_2","Count_4","CloudyMath","Clouds","total_points")
 bond.allclouds$SiteCode <- "BOND1"
 bondvilleall.lvl1 <- merge(bondvilleall.lvl1,bond.allclouds, by=c("Date"),all=T)
@@ -123,144 +151,142 @@ bondvilleall.lvl1 <- merge(bondvilleall.lvl1,bond.allclouds, by=c("Date"),all=T)
 bondvilleall.lvl1$Seasons <- factor(bondvilleall.lvl1$Season, label=c("Winter","Spring","Summer","Autumn"))
 bondvilleall.lvl1$Cloud_bypoint <- ifelse(bondvilleall.lvl1$Data_Quality_Level.x <3, 1, 0)
 
-#'NA' any dates w/ < 10 data points
+# 'NA' any dates w/ < 10 data points
 bondvilleall.lvl1$total_points <- ifelse(bondvilleall.lvl1$total_points < 10, NA, bondvilleall.lvl1$total_points)
 bondvilleall.lvl1 <- drop_na(bondvilleall.lvl1,total_points)  
 
 
 
 
-##Example code for statistical analysis performed throughout
-#Figure 1 statistics
-#Level 1.0 AERONET product & AERONET algorithm
-sun1 <- subset(bondvillelvl1, bondvillelvl1$Clouds=="0") #subsetting for clear sky days using AERONET algorithm
-cld1 <- subset(bondvillelvl1, bondvillelvl1$Clouds=="1") #subsetting for cloudy days using AERONET algorithm
-median(sun1$AE440to870_Angstrom_Exponent, na.rm=TRUE)
-median(cld1$AE440to870_Angstrom_Exponent, na.rm=TRUE)
-wilcox.test(sun1$AE440to870_Angstrom_Exponent,cld1$AE440to870_Angstrom_Exponent,alternative="two.sided")$p.value #Mann-Whitney U test
-#Level 1.0 AERONET product & MODIS Cloud Mask
-sun1 <- subset(bondvillelvl1, bondvillelvl1$CLOUDY=="0") #subsetting for clear sky days using MODIS Cloud Mask
-cld1 <- subset(bondvillelvl1, bondvillelvl1$CLOUDY=="1") #subsetting for cloudy days using MODIS Cloud Mask
-median(sun1$AE440to870_Angstrom_Exponent, na.rm=TRUE)
-median(cld1$AE440to870_Angstrom_Exponent, na.rm=TRUE)
-wilcox.test(sun1$AE440to870_Angstrom_Exponent,cld1$AE440to870_Angstrom_Exponent,alternative="two.sided")$p.value #Mann-Whitney U test
-#Level 2.0 AERONET product & MODIS Cloud Mask 
-sun2 <- subset(bondvillelvl2, bondvillelvl2$CLOUDY=="0") #subsetting for clear sky days using MODIS Cloud Mask
-cld2 <- subset(bondvillelvl2, bondvillelvl2$CLOUDY=="1") #subsetting for cloudy days using MODIS Cloud Mask
-median(sun2$AE440to870_Angstrom_Exponent, na.rm=TRUE)
-median(cld2$AE440to870_Angstrom_Exponent, na.rm=TRUE)
-wilcox.test(sun2$AE440to870_Angstrom_Exponent,cld2$AE440to870_Angstrom_Exponent,alternative="two.sided")$p.value #Mann-Whitney U test
+## Example code for statistical analysis performed throughout
+# Figure 2 statistics
+# Level 1.0 AERONET product & AERONET algorithm
+for(i in 1:4){ #looping through each season
+  current.season <- subset(bondalllvl1.only4, bondalllvl1.only4$Season==i) 
+  sun1 <- subset(current.season, current.season$Clouds=="0")
+  cld1 <- subset(current.season, current.season$Clouds=="1")
+  med1 <- median(sun1$AE440to870_Angstrom_Exponent, na.rm=TRUE)
+  med2 <- median(cld1$AE440to870_Angstrom_Exponent, na.rm=TRUE)
+  ae <- wilcox.test(sun1$AE440to870_Angstrom_Exponent,cld1$AE440to870_Angstrom_Exponent,alternative="two.sided")$p.value
+  i<-i # represents the season
+  dfrm<-data.frame(med1=med1, med2=med2, ae=ae, i=i)
+}
 
-#above subsets and Mann-Whitney U tests were performed on all displayed data and figures in the main text and supplemental information. Full results for Figures 2-4 in the main text can be found in Table S2. 
+# above subsets and Mann-Whitney U tests were performed on all displayed data and figures in the main text and supplemental information. Full results for Figures 1-4 in the main text can be found in Table S2-S4. 
 
 
-###Figure Code Reproductions
+### Figure Code Reproductions
 
-######creating table for labeling #####
-bondaerocounts <- read.table(text="season total_pts clear cloudy ae_p aod500_p temp_p rh_p pbl_p aod440_p aod870_p
-                             1 42 25 17 <0.001 <0.001 0.879 0.526 0.388 <0.001 <0.001
-                             2 64 29 35 <0.001 <0.001 0.227 0.080 0.289 <0.001 <0.001
-                             3 73 50 23 <0.001 <0.001 0.487 0.206 0.237 <0.001 <0.001
-                             4 53 33 20 0.083 0.044 0.737 0.046 0.643 0.060 0.015", header=T)
-
-
-##Figure 1
-par(mfrow=c(1,3),mar=c(0.5,4.2,0.5,0)+0.5)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==0), AE440to870_Angstrom_Exponent~SiteCode, lwd=1, wex=(137/231)*1.5, col="gold", yaxt="n", rectDraw=TRUE, border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.25,2.2), cex.axis=1.3, xlab=NA, ylab=NA)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==1), AE440to870_Angstrom_Exponent~SiteCode, lwd=1, wex=(94/231)*1.5, col="deepskyblue", yaxt="n", rectDraw=TRUE, border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.25,2.2), add=T)
-title(main="", xlab="", ylab=expression("AE (440-870 nm)"),cex.lab=1.5)
-axis(side=2, las=2, cex.axis=1.5, labels=TRUE, tick=TRUE)
-text(x=0.7,y=-0.26,label="n =", col="black", cex=1.5)
-text(x=0.89,y=-0.25, label="137", col="darkorange2", cex=1.5, font=4)
-text(x=1.06,y=-0.25, label="95", col="blue", cex=1.5, font=4)
-text(x=1.35,y=-0.25, label="(<0.001)", col="black", cex=1.5, font=4)
-text(x=0.54,y=2.17, label="a", col="black", font=2, cex=1.5)
-par(mar=c(0.5,3.4,0.5,0.5)+0.5)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$CLOUDY==0), AE440to870_Angstrom_Exponent~SiteCode, lwd=1, wex=(162/231)*1.5, col="gold", yaxt="n", rectDraw=TRUE, border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.25,2.2), cex.axis=1.3, xlab=NA, ylab=NA)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$CLOUDY==1), AE440to870_Angstrom_Exponent~SiteCode, lwd=1, wex=(69/231)*1.5, col="deepskyblue", yaxt="n", rectDraw=TRUE, border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.25,2.2), add=T)
-title(main="", xlab="", ylab="",cex.lab=1.5)
-axis(side=2, las=2, cex.axis=1.5, labels=FALSE, tick=TRUE)
-text(x=0.7,y=-0.26,label="n =", col="black", cex=1.5)
-text(x=0.9,y=-0.25, label="162", col="darkorange2", cex=1.5, font=4)
-text(x=1.06,y=-0.25, label="70", col="blue", cex=1.5, font=4)
-text(x=1.35,y=-0.25, label="(<0.001)", col="black", cex=1.5, font=4)
-text(x=0.54,y=2.17, label="b", col="black", font=2, cex=1.5)
-par(mar=c(0.5,3.4,0.5,0.5)+0.5)
-vioplot(data=subset(bondvillelvl2, bondvillelvl2$CLOUDY==0), AE440to870_Angstrom_Exponent~SiteCode, lwd=1, wex=(119/152)*1.5, col="gold", yaxt="n", rectDraw=TRUE, border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.25,2.2), cex.axis=1.3, xlab=NA, ylab=NA)
-vioplot(data=subset(bondvillelvl2, bondvillelvl2$CLOUDY==1), AE440to870_Angstrom_Exponent~SiteCode, lwd=1, wex=(33/152)*1.5, col="deepskyblue", yaxt="n", rectDraw=TRUE, border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.25,2.2), add=T)
-legend(x=0.75, y=0.38, fill=c("gold","deepskyblue"), border=c("darkorange2","blue"), legend=c("Clear Sky","Cloudy"), bty="n", cex=1.5)
-title(main="", xlab="", ylab="",cex.lab=1.5)
-axis(side=2, las=2, cex.axis=1.5, labels=FALSE, tick=TRUE)
-text(x=0.7,y=-0.26,label="n =", col="black", cex=1.5)
-text(x=0.9,y=-0.25, label="119", col="darkorange2", cex=1.5, font=1)
-text(x=1.06,y=-0.25, label="33", col="blue", cex=1.5, font=1)
-text(x=1.38,y=-0.25, label="(0.802)", col="black", cex=1.5, font=1)
-text(x=0.54,y=2.17, label="c", col="black", font=2, cex=1.5)
-dev.off()
+###### creating table for labeling #####
+bondall.4clouds <- read.table(text="season ae aod440 aod500 aod675 aod870 temp rh pbl
+                              1 0.944 <<0.05 0.001 0.002 <<0.05 0.505 0.915 0.961
+                              2 <<0.05 <<0.05 <<0.05 <<0.05 <<0.05 0.001 0.106 0.047
+                              3 <<0.05 <<0.05 <<0.05 <<0.05 <<0.05 0.324 0.561 0.041
+                              4 <<0.05 <<0.05 <<0.05 <<0.05 <<0.05 0.132 0.439 0.055", header=T)
 
 
+### Figure 1 (Seasonal cloudy & clear sky AOD violin distributions)
+par(mfrow=c(2,2), mar=c(2,4,0.5,0.5)+0.5)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==0), AOD_440nm~Season, lwd=1, col="gold", yaxt="n", rectDraw=TRUE, 
+        border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.05,1.5),
+        cex.axis=1.3, xlab=NA, ylab=NA)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==1), AOD_440nm~Season, lwd=1, col="deepskyblue", yaxt="n", rectDraw=TRUE, 
+        border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.05,1.5), add=T)
+legend("topleft", fill=c("gold","deepskyblue"), border=c("darkorange2","blue"), legend=c("Clear","Cloudy"), bty="n", cex=1.3)
+title(main="", xlab="", ylab="AOD (440 nm)",cex.lab=1.5)
+axis(side=2, las=1, cex.axis=1.4, labels=c(0,0.3,0.6,0.9,1.2,1.5), at=c(0,0.3,0.6,0.9,1.2,1.5), tick=TRUE)
+axis(side=1, cex.axis=1.4, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
+text(x=bondall.4clouds$season, y=-0.05,label=bondall.4clouds$aod440, col="black", cex=1.3, font=4)
+text(x=4.4,y=1.45,label="(a)", col="black", cex=1.5)
+par(mar=c(2,4,0.5,0.5)+0.5)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==0), AOD_500nm~Season, lwd=1, col="gold", yaxt="n", rectDraw=TRUE, 
+        border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.05,1.5),
+        cex.axis=1.3, xlab=NA, ylab=NA)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==1), AOD_500nm~Season, lwd=1, col="deepskyblue", yaxt="n", rectDraw=TRUE, 
+        border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.05,1.5), add=T)
+title(main="", xlab="", ylab="AOD (500 nm)",cex.lab=1.5)
+axis(side=2, las=1, cex.axis=1.4, labels=c(0,0.3,0.6,0.9,1.2,1.5), at=c(0,0.3,0.6,0.9,1.2,1.5), tick=TRUE)
+axis(side=1, cex.axis=1.4, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
+text(x=bondall.4clouds$season, y=-0.05,label=bondall.4clouds$aod500, col="black", cex=1.3, font=4)
+text(x=4.4,y=1.45,label="(b)", col="black", cex=1.5)
+par(mar=c(2,4.5,0.5,0.5)+0.5)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==0), AOD_675nm~Season, lwd=1, col="gold", yaxt="n", rectDraw=TRUE, 
+        border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.05,1.5),
+        cex.axis=1.3, xlab=NA, ylab=NA)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==1), AOD_675nm~Season, lwd=1, col="deepskyblue", yaxt="n", rectDraw=TRUE, 
+        border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.05,1.5), add=T)
+title(main="", xlab="", ylab="AOD (675 nm)",cex.lab=1.5)
+axis(side=2, las=1, cex.axis=1.4, labels=c(0,0.3,0.6,0.9,1.2,1.5), at=c(0,0.3,0.6,0.9,1.2,1.5), tick=TRUE)
+axis(side=1, cex.axis=1.4, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
+text(x=bondall.4clouds$season, y=-0.05,label=bondall.4clouds$aod675, col="black", cex=1.3, font=4)
+text(x=4.4,y=1.45,label="(c)", col="black", cex=1.5)
+par(mar=c(2,4,0.5,0.5)+0.5)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==0), AOD_870nm~Season, lwd=1, col="gold", yaxt="n", rectDraw=TRUE,
+        border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.05,1.5),
+        cex.axis=1.3, xlab=NA, ylab=NA)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==1), AOD_870nm~Season, lwd=1, col="deepskyblue", yaxt="n", rectDraw=TRUE,
+        border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.05,1.5), add=T)
+title(main="", xlab="", ylab="AOD (870 nm)",cex.lab=1.5)
+axis(side=2, las=1, cex.axis=1.4, labels=c(0,0.3,0.6,0.9,1.2,1.5), at=c(0,0.3,0.6,0.9,1.2,1.5), tick=TRUE)
+axis(side=1, cex.axis=1.4, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
+text(x=bondall.4clouds$season, y=-0.05,label=bondall.4clouds$aod870, col="black", cex=1.3, font=4)
+text(x=4.4,y=1.45,label="(d)", col="black", cex=1.5)
 
-### Figure 2
-par(mfrow=c(1,3),mar=c(2,4.5,0.5,0)+0.5)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==0), AE440to870_Angstrom_Exponent~Season, lwd=1, wex=(bondaerocounts$clear/232)*6, col="gold", yaxt="n", rectDraw=TRUE, rectCol="darkorange2", border="darkorange2", lineCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.25,2.2), cex.axis=1.3, xlab=NA, ylab=NA, na.rm=TRUE)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==1), AE440to870_Angstrom_Exponent~Season, lwd=1, wex=(bondaerocounts$cloud/232)*6, col="deepskyblue", yaxt="n", rectDraw=TRUE, rectCol="blue", border="blue", lineCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.25,2.2), add=T)
-title(main="", xlab="", ylab=expression("AE (440-870 nm)"), cex.lab=1.5)
+
+### Figure 2 (Seasonal cloudy & clear sky Angstrom Exponent violin distributions)
+par(xpd=T, mar=c(2,4.3,0.5,6.1)+0.5)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==0), AE440to870_Angstrom_Exponent~Season, lwd=1, col="gold", yaxt="n", 
+        rectDraw=TRUE, rectCol="darkorange2", border="darkorange2", lineCol="darkorange2", plotCentre="line", trim=TRUE, side="left",
+        ylim=c(-0.3,3), cex.axis=1.3, xlab=NA, ylab=NA, na.rm=TRUE)
+vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==1), AE440to870_Angstrom_Exponent~Season, lwd=1, col="deepskyblue", yaxt="n", 
+        rectDraw=TRUE, rectCol="blue", border="blue", lineCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.3,3), add=T)
+legend(x=4.6,y=1.7, fill=c("gold","deepskyblue"), border=c("darkorange2","blue"), legend=c("Clear","Cloudy"), bty="n", cex=1.3)
+title(main="", xlab="", ylab="AE (440-870 nm)", cex.lab=1.5)
 axis(side=2, las=2, cex.axis=1.4, labels=TRUE, tick=TRUE)
 axis(side=1, cex.axis=1.4, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
-text(x=bondaerocounts$season, y=-0.25, label=bondaerocounts$ae_p, col="black", cex=1.3, font=c(4,4,4,1))
-text(x=0.6,y=2.15,label="a", col="black", cex=1.5, font=2)
-par(mar=c(2,4,0.5,0.5)+0.5)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==0), AOD_440nm~Season, lwd=1, wex=(bondaerocounts$clear/232)*6, col="gold", yaxt="n", rectDraw=TRUE, border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.03,1.5), cex.axis=1.3, xlab=NA, ylab=NA)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==1), AOD_440nm~Season, lwd=1, wex=(bondaerocounts$cloud/232)*6, col="deepskyblue", yaxt="n", rectDraw=TRUE, border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.03,1.5), add=T)
-title(main="", xlab="", ylab="AOD (440 nm)",cex.lab=1.5)
-axis(side=2, las=1, cex.axis=1.4, labels=TRUE, tick=TRUE)
-axis(side=1, cex.axis=1.4, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
-text(x=bondaerocounts$season, y=-0.03,label=bondaerocounts$aod440_p, col="black", cex=1.3, font=c(4,4,4,1))
-text(x=0.6,y=1.48,label="b", col="black", cex=1.5, font=2)
-par(mar=c(2,4,0.5,0.5)+0.5)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==0), AOD_870nm~Season, lwd=1, wex=(bondaerocounts$clear/232)*6, col="gold", yaxt="n", rectDraw=TRUE, border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.03,1.5), cex.axis=1.3, xlab=NA, ylab=NA)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==1), AOD_870nm~Season, lwd=1, wex=(bondaerocounts$cloud/232)*6, col="deepskyblue", yaxt="n", rectDraw=TRUE, border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-0.03,1.5), add=T)
-legend("topright", fill=c("gold","deepskyblue"), border=c("darkorange2","blue"), legend=c("Clear Sky","Cloudy"), bty="n", cex=1.4)
-title(main="", xlab="", ylab="AOD (870 nm)",cex.lab=1.5)
-axis(side=2, las=1, cex.axis=1.4, labels=TRUE, tick=TRUE)
-axis(side=1, cex.axis=1.4, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
-text(x=bondaerocounts$season, y=-0.03,label=bondaerocounts$aod870_p, col="black", cex=1.3, font=4)
-text(x=0.6,y=1.48,label="c", col="black", cex=1.5, font=2)
-dev.off()
+text(x=bondall.4clouds$season, y=-0.3, label=bondall.4clouds$ae, col="black", cex=1.3, font=c(1,4,4,4))
 
 
-### Figure 3
-par(mfrow=c(3,1),mar=c(2.5,4.7,0.5,0.5)+0.5)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==0), (TEMP_ecmwf-273.15)~Season, lwd=1, wex=(bondaerocounts$clear/231)*6, col="gold", yaxt="n", rectDraw=TRUE, rectCol="darkorange2", border="darkorange2", lineCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-15,30.5), axes=FALSE, xlab=NA, ylab=NA, na.rm=TRUE)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==1), (TEMP_ecmwf-273.15)~Season, lwd=1, wex=(bondaerocounts$cloud/231)*6, col="deepskyblue", yaxt="n", rectDraw=TRUE, rectCol="blue", border="blue", lineCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-15,30.5), na.rm=T, add=T)
-legend("topleft", fill=c("gold","deepskyblue"), border=c("darkorange2","blue"), legend=c("Clear Sky","Cloudy"), bty="n", cex=1.75)
+### Figure 3 (Seasonal cloudy & clear sky meteorological violin distributions)
+par(mfrow=c(3,1), mar=c(2,4.7,0.5,0.5)+0.5)
+vioplot(data=subset(bondlvl1.4s, bondlvl1.4s$Clouds==0), (TEMP_ecmwf-273.15)~Season, lwd=1, col="gold", yaxt="n", rectDraw=TRUE,
+        rectCol="darkorange2", border="darkorange2", lineCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-18,32),
+        axes=FALSE, xlab=NA, ylab=NA, na.rm=TRUE)
+vioplot(data=subset(bondlvl1.4s, bondlvl1.4s$Clouds==1), (TEMP_ecmwf-273.15)~Season, lwd=1, col="deepskyblue", yaxt="n", rectDraw=TRUE,
+        rectCol="blue", border="blue", lineCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(-18,32), na.rm=T, add=T)
+legend("topleft", fill=c("gold","deepskyblue"), border=c("darkorange2","blue"), legend=c("Clear","Cloudy"), bty="n", cex=1.75)
 title(main="", xlab="", ylab=expression("Temperature"~(degree*C)), cex.lab=1.9)
 axis(side=2, las=2, cex.axis=1.8, labels=TRUE, tick=TRUE)
-axis(side=1, cex.axis=1.8, labels=FALSE, at=c(1,2,3,4), tick=TRUE)
-text(x=bondaerocounts$season, y=-15, label=as.character(bondaerocounts$temp_p), col="black", cex=1.8, font=1)
-text(x=4.45,y=30,label="a", col="black", font=2, cex=1.9)
-par(mar=c(2.5,4.7,0.5,0.5)+0.5)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==0), (RH_ecmwf*100)~Season, lwd=1, wex=(bondaerocounts$clear/231)*6, col="gold", yaxt="n", rectDraw=TRUE, rectCol="darkorange2", border="darkorange2", lineCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(28,82), axes=FALSE, xlab=NA, ylab=NA, na.rm=TRUE)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==1), (RH_ecmwf*100)~Season, lwd=1, wex=(bondaerocounts$cloud/231)*6, col="deepskyblue", yaxt="n", rectDraw=TRUE, rectCol="blue", border="blue", lineCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(28,82), na.rm=T, add=T)
+axis(side=1, cex.axis=1.8, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
+text(x=bondall.4clouds$season, y=-18, label=as.character(bondall.4clouds$temp), col="black", cex=1.8, font=c(1,4,1,1))
+text(x=4.45,y=30,label="(a)", col="black", cex=1.9)
+par(mar=c(2,4.7,0.5,0.5)+0.5)
+vioplot(data=subset(bondlvl1.4s, bondlvl1.4s$Clouds==0), (RH_ecmwf*100)~Season, lwd=1, col="gold", yaxt="n", rectDraw=TRUE, rectCol="darkorange2",
+        border="darkorange2", lineCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(28,87), axes=FALSE, xlab=NA, ylab=NA, na.rm=TRUE)
+vioplot(data=subset(bondlvl1.4s, bondlvl1.4s$Clouds==1), (RH_ecmwf*100)~Season, lwd=1, col="deepskyblue", yaxt="n", rectDraw=TRUE, rectCol="blue",
+        border="blue", lineCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(28,87), na.rm=T, add=T)
 title(main="", xlab="", ylab=expression("RH (%)"), cex.lab=1.9)
 axis(side=2, las=2, cex.axis=1.8, labels=TRUE, tick=TRUE)
-axis(side=1, cex.axis=1.8, labels=FALSE, at=c(1,2,3,4), tick=TRUE)
-text(x=bondaerocounts$season, y=28, label=bondaerocounts$rh_p, col="black", cex=1.8, font=c(1,1,1,4))
-text(x=4.45,y=81.5,label="b", col="black", font=2, cex=1.9)
-par(mar=c(2,4.7,0.5,0.5)+0.5)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==0), (pbl/1000)~Season, lwd=1, wex=(bondaerocounts$clear/231)*6, col="gold", yaxt="n", rectDraw=TRUE, border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(0.08,1.6), axes=FALSE, xlab=NA, ylab=NA, na.rm=TRUE)
-vioplot(data=subset(bondvillelvl1, bondvillelvl1$Clouds==1), (pbl/1000)~Season, lwd=1, wex=(bondaerocounts$cloud/231)*6, col="deepskyblue", yaxt="n", rectDraw=TRUE, border="blue", lineCol="blue", rectCol="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(0.08,1.6), na.rm=T, add=T)
-title(main="", xlab="", ylab=expression("PBL Height (km)"), cex.lab=1.9)
-axis(side=2, las=1, cex.axis=1.8, labels=TRUE, at=c(0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6), tick=TRUE)
 axis(side=1, cex.axis=1.8, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
-text(x=bondaerocounts$season, y=0.07, label=bondaerocounts$pbl_p, col="black", cex=1.8, font=1)
-text(x=4.45,y=1.58,label="c", col="black", font=2, cex=1.9)
-dev.off()
+text(x=bondall.4clouds$season, y=28, label=bondall.4clouds$rh, col="black", cex=1.8, font=1)
+text(x=4.45,y=85,label="(b)", col="black", cex=1.9)
+par(mar=c(2,4.7,0.5,0.5)+0.5)
+vioplot(data=subset(bondlvl1.4s, bondlvl1.4s$Clouds==0), (PBL_ecmwf/1000)~Season, lwd=1, col="gold", yaxt="n", rectDraw=TRUE, border="darkorange2",
+        lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(0,1.7), axes=FALSE, xlab=NA, ylab=NA, na.rm=TRUE)
+vioplot(data=subset(bondlvl1.4s, bondlvl1.4s$Clouds==1), (PBL_ecmwf/1000)~Season, lwd=1, col="deepskyblue", yaxt="n", rectDraw=TRUE, border="blue",
+        lineCol="blue", bondlvl1.4s="blue", plotCentre="line", trim=TRUE, side="right", ylim=c(0,1.7), na.rm=T, add=T)
+title(main="", xlab="", ylab=expression("PBL Height (km)"), cex.lab=1.9)
+axis(side=2, las=1, cex.axis=1.8, labels=TRUE, at=c(0,0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6), tick=TRUE)
+axis(side=1, cex.axis=1.8, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2,3,4), tick=TRUE)
+text(x=bondall.4clouds$season, y=0, label=bondall.4clouds$pbl, col="black", cex=1.8, font=c(1,4,4,1))
+text(x=4.45,y=1.65,label="(c)", col="black", cex=1.9)
 
-###FIGURE 4
-##PM2.5 composition
-bond.composition <- data.frame(Season=bondvillelvl1$Season,Clouds=bondvillelvl1$Clouds,SO4=bondvillelvl1$SO4,NO3=bondvillelvl1$NO3,ALW=bondvillelvl1$ALW_ecmwf,
-                               ALW_org=bondvillelvl1$Vwo_ugm3,Na=bondvillelvl1$Na,Cl=bondvillelvl1$Cl,Ca=bondvillelvl1$Ca,K=bondvillelvl1$K,Mg=bondvillelvl1$Mg,TOM=bondvillelvl1$OM)
+
+### Figure 4 (Seasonal stacked bar chart of median cloudy & clear sky PM2.5 chemical composition & ALW estimates)
+# subset dataframe to only contain needed species for plot & rearrange for proper plotting
+bond.composition <- data.frame(Season=bondlvl1.4s$Season,Clouds=bondlvl1.4s$Clouds,SO4=bondlvl1.4s$SO4,NO3=bondlvl1.4s$NO3,
+                               ALW=bondlvl1.4s$ALW_ecmwf,ALW_org=bondlvl1.4s$Vwo_ugm3,Na=bondlvl1.4s$Na,Cl=bondlvl1.4s$Cl,
+                               Ca=bondlvl1.4s$Ca,K=bondlvl1.4s$K,Mg=bondlvl1.4s$Mg,TOM=bondlvl1.4s$OM)
 bond.composition[is.na(bond.composition)] <- 0
 bond.composition$Dust_NaCl <- bond.composition$Ca+bond.composition$K+bond.composition$Mg+bond.composition$Na+bond.composition$Cl
 #drop individual ion columns for plotting
@@ -269,7 +295,8 @@ bond.composition$Cl<-NULL
 bond.composition$Ca<-NULL
 bond.composition$K<-NULL
 bond.composition$Mg<-NULL
-bond.composition$totals <- bond.composition$SO4+bond.composition$NO3+bond.composition$ALW+bond.composition$ALW_org+bond.composition$TOM+bond.composition$Dust_NaCl
+bond.composition$totals <- bond.composition$SO4+bond.composition$NO3+bond.composition$ALW+bond.composition$ALW_org+
+  bond.composition$TOM+bond.composition$Dust_NaCl
 
 bond.composition <- aggregate(bond.composition, by=list(bond.composition$Season,bond.composition$Clouds), FUN="median", na.rm=T)
 bond.composition$Group.1<-NULL
@@ -282,23 +309,26 @@ bond.composition <- merge(bond.composition,bondcomptotals, by=c("Season","Clouds
 
 bond.composition$Sky <- ifelse(bond.composition$Clouds=="0","Clear",
                                ifelse(bond.composition$Clouds=="1","Cloudy",NA))
-bond.composition$fontface <- ifelse(bond.composition$Season<3,"plain",
-                                    ifelse(bond.composition$Season==3,"bold.italic",
-                                           ifelse(bond.composition==4,"plain","plain")))
 
 bondbars <- ggplot(bond.composition, aes(x=Season, y=value, fill=species))+
-  geom_bar(data=subset(bond.composition, bond.composition$Clouds=="0"), aes(x=Season-0.2), position="stack", stat="identity", width=0.35, colour="black", lwd=0.35)+
-  geom_bar(data=subset(bond.composition, bond.composition$Clouds=="1"), aes(x=Season+0.2), position="stack", stat="identity", width=0.35, colour="black", lwd=0.35)+
-  scale_fill_manual(values=c("cyan2","turquoise4","saddlebrown","forestgreen","blue1","red1"),labels=c("Inorganic ALW","Organic ALW","Dust Ions, NaCl","Total OM",expression("NO"[3]^{-1}),expression("SO"[4]^{-2})))+
-  scale_y_continuous(limits=c(0,16.4),breaks=c(0,2,4,6,8,10,12,14,16),labels=c(0,2,4,6,8,10,12,14,16),expand=c(0,0.15))+
+  geom_bar(data=subset(bond.composition, bond.composition$Clouds=="0"), aes(x=Season-0.2), position="stack", stat="identity", width=0.35,
+           colour="black", lwd=0.35)+
+  geom_bar(data=subset(bond.composition, bond.composition$Clouds=="1"), aes(x=Season+0.2), position="stack", stat="identity", width=0.35,
+           colour="black", lwd=0.35)+
+  scale_fill_manual(values=c("cyan","turquoise4","saddlebrown","forestgreen","blue1","red1"),
+                    labels=c("Inorganic ALW","Organic ALW","Dust Species","Total OM",expression("NO"[3]^{-1}),expression("SO"[4]^{-2})))+
+  scale_y_continuous(limits=c(0,12),breaks=c(0,2,4,6,8,10,12),labels=c(0,2,4,6,8,10,12),expand=c(0,0.15))+
   scale_x_continuous(limits=c(0.6,4.4),breaks=c(1,2,3,4),labels=c("Winter","Spring","Summer","Fall"))+
   ylab(expression("Mass Concentration"~(mu*g~m^{-3})))+
-  theme(axis.text=element_text(size=16,color="black"),axis.title=element_text(size=18),axis.line=element_line(color="black"),axis.ticks.length=unit(0.08,"in"),
-        panel.grid.major=element_blank(),panel.grid.minor=element_blank(),panel.background=element_blank(),axis.title.x=element_blank(),
-        legend.text=element_text(size=14,hjust=0),legend.title=element_blank(),legend.key.size=unit(0.3,"in"),legend.position=c(0.867,0.8),legend.key=element_blank())
-g <- bondbars + geom_text(data=subset(bond.composition, bond.composition$Clouds=="0"),aes(x=Season-0.2,y=total+0.4,label=round(total, digits=1), fontface=fontface),colour="orange2", size=6)+
-  geom_text(data=subset(bond.composition, bond.composition$Clouds=="1"),aes(x=Season+0.2,y=total+0.4,label=round(total, digits=1), fontface=fontface), colour="blue", size=6)+
-  geom_text(aes(x=0.6,y=16, label="Clear Median"), colour="orange2", hjust=0, size=5.5)+geom_text(aes(x=0.6,y=15.2, label="Cloudy Median"), colour="blue", hjust=0, size=5.5)
-print(g)
-dev.off()
-
+  theme(axis.text=element_text(size=16,color="black"),axis.title=element_text(size=18),axis.line=element_line(color="black"),
+        axis.ticks.length=unit(0.08,"in"),panel.grid.major=element_blank(),panel.grid.minor=element_blank(),panel.background=element_blank(),
+        axis.title.x=element_blank(),legend.text=element_text(size=14,hjust=0),legend.title=element_blank(),legend.key.size=unit(0.3,"in"),
+        legend.position="right",legend.key=element_blank())
+g <- bondbars + 
+  geom_text(data=subset(bond.composition, bond.composition$Clouds=="0"), aes(x=Season-0.2,y=total+0.4,label=round(total, digits=1), fontface="plain"),
+            colour="orange2", size=6)+
+  geom_text(data=subset(bond.composition, bond.composition$Clouds=="1"), aes(x=Season+0.2,y=total+0.4,label=round(total, digits=1), fontface="plain"),
+            colour="blue", size=6)+
+  geom_text(aes(x=0.6,y=11.6, label="Clear Median"), colour="orange2", hjust=0, size=5.5)+
+  geom_text(aes(x=0.6,y=10.6, label="Cloudy Median"), colour="blue", hjust=0, size=5.5)
+ print(g)
