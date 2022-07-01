@@ -123,11 +123,11 @@ bond_all.ecmwf$Vwo_ugm3 <- (bond_all.ecmwf$Vwo*(10^6)*(10^6)) # final value of o
 
 ## Cloudiness Determination using the AERONET metadata
 bondallaerodates <- data.frame(date=bondvilleall.lvl1$Date,Quality_Level=bondvilleall.lvl1$Data_Quality_Level.x) 
-# Quality Level = scale of 1-4
-# no "3" points in dataset 
+# Quality Level = metadata scale of 1-4
 
 bondallaero.cloud1 <- bondallaerodates %>% group_by(date) %>% filter(Quality_Level==1) %>% count(name="Count_1", .drop=TRUE)
 bondallaero.cloud2 <- bondallaerodates %>% group_by(date) %>% filter(Quality_Level==2) %>% count(name="Count_2", .drop=TRUE)
+bondallaero.cloud3 <- bondallaerodates %>% group_by(date) %>% filter(Quality_Level==3) %>% count(name="Count_3", .drop=TRUE) # no 3s in our date range
 bondallaero.cloud4 <- bondallaerodates %>% group_by(date) %>% filter(Quality_Level==4) %>% count(name="Count_4", .drop=TRUE)
 
 bond.allcounts <- data.frame(unique(bondallaerodates$date))
@@ -135,25 +135,33 @@ colnames(bond.allcounts) <- c("date")
 
 bond.allclouds <- left_join(bond.allcounts, bondallaero.cloud1, by = NULL, copy = FALSE, suffix = c(".x", ".y"), keep=FALSE)
 bond.allclouds <- left_join(bond.allclouds, bondallaero.cloud2, by = NULL, copy = FALSE, suffix = c(".x", ".y"), keep=FALSE)
+bond.allclouds <- left_join(bond.allclouds, bondallaero.cloud3, by = NULL, copy = FALSE, suffix = c(".x", ".y"), keep=FALSE)
 bond.allclouds <- left_join(bond.allclouds, bondallaero.cloud4, by = NULL, copy = FALSE, suffix = c(".x", ".y"), keep=FALSE)
 
 bond.allclouds[is.na(bond.allclouds)] <- 0 
 
-bond.allclouds$Cloudy_Math <- (bond.allclouds$Count_1+bond.allclouds$Count_2)/(bond.allclouds$Count_1+bond.allclouds$Count_2+bond.allclouds$Count_4)
+bond.allclouds$Cloudy_Math <- (bond.allclouds$Count_1+bond.allclouds$Count_2)/(bond.allclouds$Count_1+bond.allclouds$Count_2+bond.allclouds$Count_3+bond.allclouds$Count_4)
 bond.allclouds$Clouds <- ifelse(bond.allclouds$Cloudy_Math>=0.5,1,0)
-bond.allclouds$total_points <- bond.allclouds$Count_1+bond.allclouds$Count_2+bond.allclouds$Count_4
+bond.allclouds$total_points <- bond.allclouds$Count_1+bond.allclouds$Count_2+bond.allclouds$Count_3+bond.allclouds$Count_4
 
 # fixing column names & merging with main data set
-colnames(bond.allclouds)<-c("Date","Count_1","Count_2","Count_4","CloudyMath","Clouds","total_points")
+colnames(bond.allclouds)<-c("Date","Count_1","Count_2","Count_3","Count_4","CloudyMath","Clouds","total_points")
 bond.allclouds$SiteCode <- "BOND1"
 bondvilleall.lvl1 <- merge(bondvilleall.lvl1,bond.allclouds, by=c("Date"),all=T)
 
-bondvilleall.lvl1$Seasons <- factor(bondvilleall.lvl1$Season, label=c("Winter","Spring","Summer","Autumn"))
+bondvilleall.lvl1$Seasons <- factor(bondvilleall.lvl1$Season, label=c("Winter","Spring","Summer","Fall"))
 bondvilleall.lvl1$Cloud_bypoint <- ifelse(bondvilleall.lvl1$Data_Quality_Level.x <3, 1, 0)
 
 # 'NA' any dates w/ < 10 data points
 bondvilleall.lvl1$total_points <- ifelse(bondvilleall.lvl1$total_points < 10, NA, bondvilleall.lvl1$total_points)
 bondvilleall.lvl1 <- drop_na(bondvilleall.lvl1,total_points)  
+
+# Now keep only days with a quality level of "4"
+bondalllvl1.only4 <- subset(bondvillelvl1, bondvillelvl1$Data_Quality_Level=="4")
+
+# drop days with less than 10 "4" points
+bondalllvl1.only4$Count4 <- ifelse(bondalllvl1.only4$Count4 < 10, NA, bondalllvl1.only4$Count4)
+bondalllvl1.only4 <- drop_na(bondalllvl1.only4,Count4)
 
 
 
