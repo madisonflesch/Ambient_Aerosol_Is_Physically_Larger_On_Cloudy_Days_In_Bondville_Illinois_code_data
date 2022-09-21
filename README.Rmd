@@ -7,7 +7,7 @@ Relevant Links:
 
 - IMPROVE network data is publicly available at https://vista.cira.colostate.edu/Improve/
 - AERONET data is publicly available at https://aeronet.gsfc.nasa.gov/cgi-bin/webtool_aod_v3
-- AERONET quality assurance algorithm metadata used for cloudiness determination method can be made available upon request via AERONET.
+- AERONET quality assurance algorithm data are listed as "bond_algorithmflags_2010-14.csv" and "bond_algorithmflags_2015-19.csv" and were provided upon special request for this analysis.
 
 ### R code for relevant calculations and figure plotting
 # Relevant packages
