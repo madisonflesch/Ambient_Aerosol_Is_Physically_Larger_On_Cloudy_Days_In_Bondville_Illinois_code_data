@@ -121,9 +121,9 @@ bond_all.ecmwf$Vwo_ugm3 <- (bond_all.ecmwf$Vwo*(10^6)*(10^6)) # final value of o
 
 
 
-## Cloudiness Determination using the AERONET metadata
+## Cloudiness Determination using the AERONET cloud screening & quality assurance algorithm
 bondallaerodates <- data.frame(date=bondvilleall.lvl1$Date,Quality_Level=bondvilleall.lvl1$Data_Quality_Level.x) 
-# Quality Level = metadata scale of 1-4
+# Quality Level = algorithm scale of 1-4
 
 bondallaero.cloud1 <- bondallaerodates %>% group_by(date) %>% filter(Quality_Level==1) %>% count(name="Count_1", .drop=TRUE)
 bondallaero.cloud2 <- bondallaerodates %>% group_by(date) %>% filter(Quality_Level==2) %>% count(name="Count_2", .drop=TRUE)
@@ -152,7 +152,7 @@ bondvilleall.lvl1 <- merge(bondvilleall.lvl1,bond.allclouds, by=c("Date"),all=T)
 bondvilleall.lvl1$Seasons <- factor(bondvilleall.lvl1$Season, label=c("Winter","Spring","Summer","Fall"))
 bondvilleall.lvl1$Cloud_bypoint <- ifelse(bondvilleall.lvl1$Data_Quality_Level.x <3, 1, 0)
 
-# 'NA' any dates w/ < 10 data points
+# 'NA' any dates w/ less than 10 data points
 bondvilleall.lvl1$total_points <- ifelse(bondvilleall.lvl1$total_points < 10, NA, bondvilleall.lvl1$total_points)
 bondvilleall.lvl1 <- drop_na(bondvilleall.lvl1,total_points)  
 
@@ -167,8 +167,9 @@ bondalllvl1.only4 <- drop_na(bondalllvl1.only4,Count4)
 
 
 ## Example code for statistical analysis performed throughout
-# Figure 2 statistics
-# Level 1.0 AERONET product & AERONET algorithm
+# Figure 3 statistics
+# "Level 1.0" AERONET data product (Angstrom exponents using Level 1.0 cloud flag but all points were "4" only)
+#Seasons: 1 = Winter 2 = Spring 3 = Summer 4 = Fall 
 for(i in 1:4){ #looping through each season
   current.season <- subset(bondalllvl1.only4, bondalllvl1.only4$Season==i) 
   sun1 <- subset(current.season, current.season$Clouds=="0")
@@ -193,7 +194,7 @@ bondall.4clouds <- read.table(text="season ae aod440 aod500 aod675 aod870 temp r
                               4 <<0.05 <<0.05 <<0.05 <<0.05 <<0.05 0.132 0.439 0.055", header=T)
 
 
-### Figure 1 (Seasonal cloudy & clear sky AOD violin distributions)
+### Figure 2 (Seasonal cloudy & clear sky AOD violin distributions)
 par(mfrow=c(2,2), mar=c(2,4,0.5,0.5)+0.5)
 vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==0), AOD_440nm~Season, lwd=1, col="gold", yaxt="n", rectDraw=TRUE, 
         border="darkorange2", lineCol="darkorange2", rectCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-0.05,1.5),
@@ -241,7 +242,7 @@ text(x=bondall.4clouds$season, y=-0.05,label=bondall.4clouds$aod870, col="black"
 text(x=4.4,y=1.45,label="(d)", col="black", cex=1.5)
 
 
-### Figure 2 (Seasonal cloudy & clear sky Angstrom Exponent violin distributions)
+### Figure 3 (Seasonal cloudy & clear sky Angstrom Exponent violin distributions)
 par(xpd=T, mar=c(2,4.3,0.5,6.1)+0.5)
 vioplot(data=subset(bondalllvl1.only4, bondalllvl1.only4$Clouds==0), AE440to870_Angstrom_Exponent~Season, lwd=1, col="gold", yaxt="n", 
         rectDraw=TRUE, rectCol="darkorange2", border="darkorange2", lineCol="darkorange2", plotCentre="line", trim=TRUE, side="left",
@@ -255,7 +256,7 @@ axis(side=1, cex.axis=1.4, labels=c("Winter","Spring","Summer","Fall"), at=c(1,2
 text(x=bondall.4clouds$season, y=-0.3, label=bondall.4clouds$ae, col="black", cex=1.3, font=c(1,4,4,4))
 
 
-### Figure 3 (Seasonal cloudy & clear sky meteorological violin distributions)
+### Figure 4 (Seasonal cloudy & clear sky meteorological violin distributions)
 par(mfrow=c(3,1), mar=c(2,4.7,0.5,0.5)+0.5)
 vioplot(data=subset(bondlvl1.4s, bondlvl1.4s$Clouds==0), (TEMP_ecmwf-273.15)~Season, lwd=1, col="gold", yaxt="n", rectDraw=TRUE,
         rectCol="darkorange2", border="darkorange2", lineCol="darkorange2", plotCentre="line", trim=TRUE, side="left", ylim=c(-18,32),
@@ -290,7 +291,7 @@ text(x=bondall.4clouds$season, y=0, label=bondall.4clouds$pbl, col="black", cex=
 text(x=4.45,y=1.65,label="(c)", col="black", cex=1.9)
 
 
-### Figure 4 (Seasonal stacked bar chart of median cloudy & clear sky PM2.5 chemical composition & ALW estimates)
+### Figure 5 (Seasonal stacked bar chart of median cloudy & clear sky PM2.5 chemical composition & ALW estimates)
 # subset dataframe to only contain needed species for plot & rearrange for proper plotting
 bond.composition <- data.frame(Season=bondlvl1.4s$Season,Clouds=bondlvl1.4s$Clouds,SO4=bondlvl1.4s$SO4,NO3=bondlvl1.4s$NO3,
                                ALW=bondlvl1.4s$ALW_ecmwf,ALW_org=bondlvl1.4s$Vwo_ugm3,Na=bondlvl1.4s$Na,Cl=bondlvl1.4s$Cl,
