@@ -1,5 +1,5 @@
 ---
-title: "Ambient Aerosol is Physically Larger on Cloudy Days in Bondville, Illinois Data & Analysis Code"
+title: "Ambient Aerosol is Physically Larger on Cloudy Days in Bondville, Illinois: Data and Figure & Analysis Code"
 output: pdf_document
 ---
 
