@@ -76,8 +76,9 @@ bond.om$soil <- (2.2 * bond.om$ALf.Val) + (2.49 * bond.om$SIf.Val) + (1.63 * bon
 bond.om$omoc <- (bond.om$MF.Val - bond.om$ammSO4f.Val - bond.om$ammNO3f.Val - bond.om$ECf.Val - bond.om$soil -
                    (1.8 * bond.om$CHLf.Val))/bond.om$OCf.Val
 
-# remove NAs 
-bond.om$ammNO3f.Val <- ifelse(bond.om$ammNO3f.Val<=0,NA,bond.om$ammNO3f.Val)
+# remove NAs for the PM2.5 & OC columns
+bond.om$MF.Val <- ifelse(bond.om$MF.Val<0,NA,bond.om$MF.Val)
+bond.om$OCf.Val <- ifelse(bond.om$OCf.Val<0,NA,bond.om$OCf.Val)
 bond.om <- na.omit(bond.om)
 
 # allocate seasons
@@ -85,10 +86,7 @@ bond.om$Year2 <- ifelse(bond.om$Month=="12", bond.om$Year+1, bond.om$Year)
 bond.om$yearqtr <- as.yearqtr(as.yearmon(bond.om$Date, "%Y-%m-%d")+1/12)
 bond.om$Season <- factor(format(bond.om$yearqtr, "%q"), levels=1:4, labels=c("1", "2", "3", "4"))
 #note: 1 == winter, 2 == spring,3 == summer, 4 == fall
-#drop any 2020 dates
-bond.om$Year <- ifelse(bond.om$Year == 2020, NA, bond.om$Year)
-bond.om <- drop_na(bond.om,Year)
-bond.om$Year3 <-as.factor(bond.om$Year2)
+bond.om$Year3 <-as.factor(bond.om$Year2) #this is just to keep the Year2 column for later
 
 # find medians for each season
 bond.omoc.ratios <- tapply(bond.om$omoc, INDEX =list(bond.om$Season, bond.om$Year3), FUN="median")
@@ -97,7 +95,7 @@ bond.final.ratios <- tibble::rownames_to_column(bond.final.ratios, "season")
 colnames(bond.final.ratios) <- c("Season","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020")
 
 bond.final.ratios <- pivot_longer(bond.final.ratios,cols=c("2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"), values_to="ratio", names_to="Year2")
-
+#added to the next data frame, "bond_all.ecmwf"
 
 # calculate organic water
 # first allocating seasons
